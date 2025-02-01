@@ -1,0 +1,149 @@
+object Form3: TForm3
+  Left = 245
+  Height = 499
+  Top = 175
+  Width = 725
+  Caption = 'Cabinet recipes'
+  ClientHeight = 499
+  ClientWidth = 725
+  LCLVersion = '3.6.0.0'
+  object RecipesBox: TGroupBox
+    Left = 0
+    Height = 470
+    Top = 0
+    Width = 724
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Caption = 'Recipes'
+    ClientHeight = 450
+    ClientWidth = 722
+    TabOrder = 0
+    object ContentBox: TGroupBox
+      Left = 8
+      Height = 400
+      Top = 48
+      Width = 704
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      Caption = 'Content'
+      ClientHeight = 380
+      ClientWidth = 702
+      TabOrder = 0
+      object RecipesFileBox: TFileListBox
+        Left = 0
+        Height = 380
+        Top = 0
+        Width = 214
+        Align = alLeft
+        Directory = '/home/neon'
+        ItemHeight = 25
+        OnDblClick = RecipesFileBoxDblClick
+        TabOrder = 0
+      end
+      object RecipesMemo: TMemo
+        Left = 214
+        Height = 380
+        Top = 0
+        Width = 490
+        Align = alLeft
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        ScrollBars = ssAutoBoth
+        TabOrder = 1
+        WantTabs = True
+        WordWrap = False
+      end
+    end
+    object RecipesFilterEntry: TEdit
+      Left = 8
+      Height = 31
+      Top = 8
+      Width = 616
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 1
+    end
+    object RecipesFilterButton: TButton
+      Left = 637
+      Height = 25
+      Top = 11
+      Width = 75
+      Anchors = [akTop, akRight]
+      Caption = 'Filter'
+      TabOrder = 2
+      OnClick = RecipesFilterButtonClick
+    end
+  end
+  object NewRecipeButton: TButton
+    Left = 8
+    Height = 25
+    Top = 474
+    Width = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'New'
+    TabOrder = 1
+    OnClick = NewRecipeButtonClick
+  end
+  object DeleteRecipeButton: TButton
+    Left = 88
+    Height = 25
+    Top = 474
+    Width = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'Delete'
+    TabOrder = 2
+    OnClick = DeleteRecipeButtonClick
+  end
+  object RenameRecipeButton: TButton
+    Left = 168
+    Height = 25
+    Top = 474
+    Width = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'Rename'
+    TabOrder = 3
+    OnClick = RenameRecipeButtonClick
+  end
+  object EditRecipeButton: TButton
+    Left = 248
+    Height = 25
+    Top = 474
+    Width = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'Edit'
+    TabOrder = 4
+    OnClick = EditRecipeButtonClick
+  end
+  object SaveRecipeButton: TButton
+    Left = 644
+    Height = 25
+    Top = 474
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = 'Save'
+    TabOrder = 5
+    OnClick = SaveRecipeButtonClick
+  end
+  object UseRecipeButton: TButton
+    Left = 328
+    Height = 25
+    Top = 474
+    Width = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'Use'
+    TabOrder = 6
+    OnClick = UseRecipeButtonClick
+  end
+  object AsyncProcess1: TAsyncProcess
+    Active = False
+    Options = []
+    Priority = ppNormal
+    StartupOptions = []
+    ShowWindow = swoNone
+    WindowColumns = 0
+    WindowHeight = 0
+    WindowLeft = 0
+    WindowRows = 0
+    WindowTop = 0
+    WindowWidth = 0
+    FillAttribute = 0
+    Left = 288
+    Top = 120
+  end
+end
