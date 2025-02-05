@@ -13,6 +13,8 @@ type
   { TForm2 }
 
   TForm2 = class(TForm)
+    TerminalEmulatorLabel: TLabel;
+    TerminalEmulatorEdit: TEdit;
     SaveButton: TButton;
     FileCommandEdit: TEdit;
     FileCommandLabel: TLabel;
@@ -69,6 +71,14 @@ begin
         if r[1] <> '' Then
           DefaultEditorEdit.Text := r[1];
       end;
+
+      regex.Expression := '^terminal-emulator :::: .*';
+      if regex.Exec(s) Then
+      begin
+        r := SplitString(s, ' :::: ');
+        if r[1] <> '' Then
+          TerminalEmulatorEdit.Text := r[1];
+      end;
     end;
 
     regex.Free;
@@ -84,6 +94,7 @@ begin
   rewrite(filep);
   writeln(filep, 'file-command :::: ' + FileCommandEdit.Text);
   writeln(filep, 'default-editor :::: ' + DefaultEditorEdit.Text);
+  writeln(filep, 'terminal-emulator :::: ' + TerminalEmulatorEdit.Text);
   closeFile(filep);
 end;
 

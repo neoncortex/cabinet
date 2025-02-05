@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 187
+  Left = 265
   Height = 564
-  Top = 83
+  Top = 57
   Width = 853
   AllowDropFiles = True
   Caption = 'Cabinet'
@@ -12,6 +12,7 @@ object Form1: TForm1
   Menu = MainMenu
   OnCreate = FormCreate
   LCLVersion = '3.6.0.0'
+  Visible = True
   object MainSplitter: TSplitter
     Cursor = crVSplit
     Left = 0
@@ -494,6 +495,11 @@ object Form1: TForm1
       Caption = 'Tools'
       object RecipesMenuItem: TMenuItem
         Caption = 'Recipes'
+        OnClick = RecipesMenuItemClick
+      end
+      object TagsMenuItem: TMenuItem
+        Caption = 'Tags'
+        OnClick = TagsMenuItemClick
       end
     end
   end

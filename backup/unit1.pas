@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, FileCtrl,
   StdCtrls, Menus, ExtCtrls, AsyncProcess, StrUtils, FileUtil, RegExpr, Clipbrd,
-  Buttons, optionForm, recipes;
+  Buttons, optionForm, recipes, tags;
 
 type
 
@@ -15,6 +15,7 @@ type
 
   TForm1 = class(TForm)
     AsyncProcess1: TAsyncProcess;
+    TagsMenuItem: TMenuItem;
     RecipesMenuItem: TMenuItem;
     Separator9: TMenuItem;
     ToolsMenuItem: TMenuItem;
@@ -150,6 +151,7 @@ type
     procedure ShowHiddenRightMenuClick(Sender: TObject);
     procedure OpenFiles(box: integer; command: ansistring);
     function GetDirectoryName(box: integer): ansistring;
+    procedure TagsMenuItemClick(Sender: TObject);
     function UnpackDirName(dirName: ansistring): ansistring;
     procedure OpenDirectories(box: integer);
     procedure DeleteFiles(box: integer);
@@ -175,6 +177,7 @@ var
   cabinetDirectory: ansistring;
   configFile: ansistring;
   recipesDir: ansistring;
+  tagsDir: ansistring;
   commandScript: ansistring;
   defaultEditor: ansistring;
   fileCommand: ansistring;
@@ -209,6 +212,7 @@ begin
   cabinetDirectory := homeDir + directorySeparator + '.cabinet';
   recipesDir := cabinetDirectory + directorySeparator + 'recipes';
   configFile := cabinetDirectory + directorySeparator + 'config.cfg';
+  tagsDir := cabinetDirectory + directorySeparator + 'tags';
   defaultEditor := 'ged "%s"';
   fileCommand := 'xdg-open "%s"';
   terminalEmulator := 'xterm';
@@ -220,6 +224,9 @@ begin
     commandScript := cabinetDirectory + directorySeparator + 'command.sh';
     if not DirectoryExists(recipesDir) Then
       CreateDir(recipesDir);
+
+    if not DirectoryExists(tagsDir) Then
+      CreateDir(tagsDir);
 
     if not FileExists(configFile) Then
     begin
@@ -233,6 +240,7 @@ begin
   end
   else
     ShowMessage('Unable to create ' + cabinetDirectory + ' directory');
+
 end;
 
 procedure TForm1.ReadConfig;
@@ -376,8 +384,18 @@ begin
   end;
 
   directoryName := UnpackDirName(files);
-  writeln(directoryName);
   GetDirectoryName := ExpandFileName(boxDir + DirectorySeparator + directoryName);
+end;
+
+procedure TForm1.TagsMenuItemClick(Sender: TObject);
+begin
+  Form4 := TForm4.Create(nil);
+  Form4.SetTagsDir(tagsDir);
+  Form4.SetFileBox1(FileBox1);
+  Form4.SetFileBox2(FileBox2);
+  Form4.SetLeftPathEdit(LeftPathEdit);
+  Form4.SetRightPathEdit(RightPathEdit);
+  Form4.Show;
 end;
 
 procedure TForm1.OpenDirectories(box: integer);
