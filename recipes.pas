@@ -105,8 +105,13 @@ var
   fileName: ansistring;
 begin
   fileName := recipesDir + directorySeparator + recipesFileBox.GetSelectedText;
-  RecipesMemo.Lines.SaveToFile(fileName);
-  RecipesFileBox.UpdateFileList;
+  if FileExists(fileName) Then
+  begin
+    RecipesMemo.Lines.SaveToFile(fileName);
+    RecipesFileBox.UpdateFileList;
+  end
+  else
+    ShowMessage('File not found: ' + fileName);
 end;
 
 procedure TForm3.NewRecipeButtonClick(Sender: TObject);

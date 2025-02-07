@@ -90,6 +90,8 @@ type
     procedure OpenDirectoryButtonClick(Sender: TObject);
     procedure PathTagButtonClick(Sender: TObject);
     procedure SearchTagButtonClick(Sender: TObject);
+    procedure SearchTagEditKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure SearchTagResultListClick(Sender: TObject);
     procedure SearchTagResultListDblClick(Sender: TObject);
     procedure SetMenuItemClick(Sender: TObject);
@@ -102,7 +104,6 @@ type
     procedure SwapClearAddButtonClick(Sender: TObject);
     procedure SwapClearDeleteButtonClick(Sender: TObject);
     procedure AddTags(Memo: TMemo; path: TEdit = nil);
-//    procedure DeleteTags(Memo: TMemo);
     procedure DeleteTags(Memo: TMemo; path: TEdit = nil);
     procedure SwapFromButtonClick(Sender: TObject);
     procedure SwapFromClearAddButtonClick(Sender: TObject);
@@ -123,8 +124,6 @@ var
   LeftPathEdit: TEdit;
   RightPathEdit: TEdit;
   tagsDir: ansistring;
-  //tagsFileList: TStringList;
-
 
 implementation
 
@@ -274,8 +273,6 @@ var
   cacheFile: ansistring;
   filep: textFile;
   fileName: ansistring;
-  lastTag: ansistring;
-  list: TStringList;
   s: ansistring;
   tagList: TStringList;
   tagListTemp: TStringList;
@@ -419,6 +416,13 @@ begin
   fileList.Free;
 end;
 
+procedure TForm4.SearchTagEditKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 13 Then
+    SearchTagButtonClick(nil);
+end;
+
 procedure TForm4.SearchTagResultListClick(Sender: TObject);
 var
   fileName: ansistring;
@@ -491,6 +495,7 @@ begin
       tagListTemp.Append(s);
 
     tagList := TagListUnique(tagListTemp);
+    tagList.Sort;
     tagList.SaveToFile(fileName);
     tagList.Free;
     tagListTemp.Free;

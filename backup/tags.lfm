@@ -1,7 +1,7 @@
 object Form4: TForm4
   Left = 351
   Height = 627
-  Top = 5
+  Top = 4
   Width = 640
   Caption = 'Cabinet - Tags'
   ClientHeight = 627
@@ -40,6 +40,7 @@ object Form4: TForm4
           Width = 544
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
+          OnKeyDown = SearchTagEditKeyDown
         end
         object SearchTagButton: TButton
           Left = 551
@@ -96,6 +97,7 @@ object Form4: TForm4
           Top = 0
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
+          ScrollBars = ssAutoBoth
           TabOrder = 0
         end
         object DeployButton: TButton
@@ -132,6 +134,7 @@ object Form4: TForm4
           Top = 0
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
+          ScrollBars = ssAutoBoth
           TabOrder = 0
         end
         object AddButton: TButton
@@ -180,6 +183,7 @@ object Form4: TForm4
           Top = 48
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
+          ScrollBars = ssAutoBoth
           TabOrder = 1
         end
         object AddToClearButton: TButton
@@ -216,6 +220,7 @@ object Form4: TForm4
           Top = 0
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
+          ScrollBars = ssAutoBoth
           TabOrder = 0
         end
         object DeleteButton: TButton
@@ -264,6 +269,7 @@ object Form4: TForm4
           Top = 48
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
+          ScrollBars = ssAutoBoth
           TabOrder = 1
         end
         object DeleteFromClearButton: TButton
@@ -310,6 +316,7 @@ object Form4: TForm4
             Top = 0
             Width = 622
             Anchors = [akTop, akLeft, akRight, akBottom]
+            ScrollBars = ssAutoBoth
             TabOrder = 0
           end
         end
@@ -329,6 +336,7 @@ object Form4: TForm4
             Top = 0
             Width = 622
             Anchors = [akTop, akLeft, akRight, akBottom]
+            ScrollBars = ssAutoBoth
             TabOrder = 0
           end
         end
@@ -398,6 +406,7 @@ object Form4: TForm4
             Top = 0
             Width = 614
             Anchors = [akTop, akLeft, akRight, akBottom]
+            ScrollBars = ssAutoBoth
             TabOrder = 0
           end
         end
@@ -417,6 +426,7 @@ object Form4: TForm4
             Top = 0
             Width = 614
             Anchors = [akTop, akLeft, akRight, akBottom]
+            ScrollBars = ssAutoBoth
             TabOrder = 0
           end
         end
