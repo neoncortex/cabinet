@@ -560,6 +560,7 @@ object Form4: TForm4
       TabOrder = 0
       TopIndex = -1
       OnDblClick = CacheListDblClick
+      OnKeyDown = CacheListKeyDown
     end
     object CacheBuildButton: TButton
       Left = 8

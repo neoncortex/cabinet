@@ -115,7 +115,11 @@ type
     procedure EditRightButtonClick(Sender: TObject);
     procedure EditRightMenuClick(Sender: TObject);
     procedure FileBox1DblClick(Sender: TObject);
+    procedure FileBox1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
+      );
     procedure FileBox2DblClick(Sender: TObject);
+    procedure FileBox2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
+      );
     procedure FileMenuQuitClick(Sender: TObject);
     procedure FilterLeftButtonClick(Sender: TObject);
     procedure FilterLeftEditKeyDown(Sender: TObject; var Key: Word;
@@ -647,6 +651,12 @@ begin
   RightPathEdit.Text := ExpandFileName(FileBox2.Directory);
 end;
 
+procedure TForm1.FileBox2KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  DoubleClickFiles(2);
+end;
+
 procedure TForm1.FileMenuQuitClick(Sender: TObject);
 begin
   Form1.Close;
@@ -992,6 +1002,13 @@ procedure TForm1.FileBox1DblClick(Sender: TObject);
 begin
   DoubleClickFiles(1);
   LeftPathEdit.Text := ExpandFileName(FileBox1.Directory);
+end;
+
+procedure TForm1.FileBox1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 13 Then
+    DoubleClickFiles(1);
 end;
 
 procedure TForm1.DeleteLeftButtonClick(Sender: TObject);

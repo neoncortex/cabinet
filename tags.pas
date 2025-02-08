@@ -87,6 +87,8 @@ type
     procedure AddToClearButtonClick(Sender: TObject);
     procedure CacheBuildButtonClick(Sender: TObject);
     procedure CacheListDblClick(Sender: TObject);
+    procedure CacheListKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure CacheReloadButtonClick(Sender: TObject);
     procedure CommandClearButtonClick(Sender: TObject);
     procedure CommandExecuteButtonClick(Sender: TObject);
@@ -359,6 +361,13 @@ begin
   begin
     deleteMemo.Append(CacheList.GetSelectedText);
   end;
+end;
+
+procedure TForm4.CacheListKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 13 Then
+    CacheListDblClick(nil);
 end;
 
 // search
