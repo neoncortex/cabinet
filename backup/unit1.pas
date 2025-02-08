@@ -15,6 +15,8 @@ type
 
   TForm1 = class(TForm)
     AsyncProcess1: TAsyncProcess;
+    CopyFilePathLeftMenuItem: TMenuItem;
+    CopyFilePathRightMenuItem: TMenuItem;
     TagsMenuItem: TMenuItem;
     RecipesMenuItem: TMenuItem;
     Separator9: TMenuItem;
@@ -96,6 +98,8 @@ type
     ViewMenuLeft: TMenuItem;
     procedure CommandClearButtonClick(Sender: TObject);
     procedure CommandExecuteButtonClick(Sender: TObject);
+    procedure CopyFilePathLeftMenuItemClick(Sender: TObject);
+    procedure CopyFilePathRightMenuItemClick(Sender: TObject);
     procedure CopyLeftMenuItemClick(Sender: TObject);
     procedure CopyLeftToRightMenuItemClick(Sender: TObject);
     procedure CopyPathLeftMenuItemClick(Sender: TObject);
@@ -165,6 +169,7 @@ type
     procedure TerminalRightMenuItemClick(Sender: TObject);
     procedure UpdateLeftMenuClick(Sender: TObject);
     procedure UpdateRightMenuClick(Sender: TObject);
+    procedure CopyFilePath(box: TFileListBox);
     procedure ReadConfig;
   private
 
@@ -181,6 +186,7 @@ var
   commandScript: ansistring;
   defaultEditor: ansistring;
   fileCommand: ansistring;
+  patterns: TStringList;
   terminalEmulator: ansistring;
   homeDir: ansistring;
   FileBox1ShowHidden: Boolean;
@@ -213,9 +219,10 @@ begin
   recipesDir := cabinetDirectory + directorySeparator + 'recipes';
   configFile := cabinetDirectory + directorySeparator + 'config.cfg';
   tagsDir := cabinetDirectory + directorySeparator + 'tags';
-  defaultEditor := 'ged "%s"';
+  defaultEditor := 'gvim "%s"';
   fileCommand := 'xdg-open "%s"';
   terminalEmulator := 'xterm';
+  patterns := TStringList.Create;
   if not DirectoryExists(cabinetDirectory) Then
     CreateDir(cabinetDirectory);
 
@@ -237,6 +244,8 @@ begin
       writeln(filep, 'terminal-emulator :::: ' + terminalEmulator);
       closeFile(filep);
     end;
+
+    readConfig;
   end
   else
     ShowMessage('Unable to create ' + cabinetDirectory + ' directory');
@@ -252,6 +261,7 @@ var
 begin
   if FileExists(configFile) Then
   begin
+    patterns.Clear;
     assignFile(filep, configFile);
     reset(filep);
     regex := TRegExpr.Create;
@@ -290,6 +300,10 @@ begin
           continue;
         end;
       end;
+
+      regex.Expression := '^pattern.*';
+      if regex.exec(s) Then
+        patterns.Append(s);
     end;
 
     regex.Free;
@@ -335,9 +349,13 @@ end;
 procedure TForm1.OpenFiles(box: integer; command: ansistring);
 var
   boxDir: ansistring;
+  commandLine: ansistring;
   fileName: ansistring;
   files: ansistring;
+  patternItem: array of ansistring;
+  regex: TRegExpr;
   s: ansistring;
+  t: ansistring;
 begin
   if box = 1 Then
   begin
@@ -350,15 +368,30 @@ begin
     files := FileBox2.GetSelectedText;
   end;
 
+  regex := TRegExpr.Create;
   for s in SplitString(files, LineEnding) do
   begin
     fileName := ExpandFileName(boxDir + DirectorySeparator + s);
     if FileExists(fileName) = True Then
     begin
-      ASyncProcess1.CommandLine := StringReplace(command, '%s', fileName, [rfReplaceAll]);
+      commandLine := StringReplace(command, '%s', fileName, [rfReplaceAll]);
+      for t in patterns do
+      begin
+        patternItem := SplitString(t, ' :::: ');
+        regex.Expression := patternItem[1];
+        if regex.exec(fileName) Then
+        begin
+          commandLine := StringReplace(patternItem[2], '%s', fileName, [rfReplaceAll]);
+          break;
+        end;
+      end;
+
+      ASyncProcess1.CommandLine := commandLine;
       ASyncProcess1.Execute;
     end;
   end;
+
+  regex.Free;
 end;
 
 function TForm1.UnpackDirName(dirName: ansistring): ansistring;
@@ -996,6 +1029,55 @@ begin
     + ' "' + selectionLeft + '"'
     + ' "' + selectionRight + '"';
   ASyncProcess1.Execute;
+end;
+
+procedure TForm1.CopyFilePath(box: TFileListBox);
+var
+  fileName: ansistring;
+  files: TStringList;
+  regex: TRegExpr;
+  res: ansistring;
+  s: ansistring;
+begin
+  files := TStringList.Create;
+  regex := TRegExpr.Create;
+  regex.Expression := '^\[.*\]$';
+  for s in SplitString(box.GetSelectedText, LineEnding) do
+  begin
+    fileName := box.Directory + DirectorySeparator;
+    if regex.exec(s) Then
+    begin
+      fileName := fileName + UnpackDirName(s);
+    end
+    else
+      fileName := fileName + s;
+
+    files.Append(fileName);
+  end;
+
+  for fileName in files do
+  begin
+    if res = '' Then
+    begin
+      res := fileName;
+    end
+    else
+      res := res + lineEnding + fileName;
+  end;
+
+  regex.Free;
+  files.Free;
+  Clipboard.AsText := res;
+end;
+
+procedure TForm1.CopyFilePathLeftMenuItemClick(Sender: TObject);
+begin
+  CopyFilePath(FileBox1);
+end;
+
+procedure TForm1.CopyFilePathRightMenuItemClick(Sender: TObject);
+begin
+  CopyFilePath(FileBox2);
 end;
 
 procedure TForm1.CopyLeftMenuItemClick(Sender: TObject);

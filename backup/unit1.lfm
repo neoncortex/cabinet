@@ -351,6 +351,10 @@ object Form1: TForm1
         Caption = 'Copy path'
         OnClick = CopyPathLeftMenuItemClick
       end
+      object CopyFilePathLeftMenuItem: TMenuItem
+        Caption = 'Copy file path'
+        OnClick = CopyFilePathLeftMenuItemClick
+      end
       object ShowHiddenLeftMenu: TMenuItem
         Caption = 'Show Hidden'
         OnClick = ShowHiddenLeftMenuClick
@@ -425,6 +429,10 @@ object Form1: TForm1
       object CopyPathRightMenuItem: TMenuItem
         Caption = 'Copy path'
         OnClick = CopyPathRightMenuItemClick
+      end
+      object CopyFilePathRightMenuItem: TMenuItem
+        Caption = 'Copy file path'
+        OnClick = CopyFilePathRightMenuItemClick
       end
       object ShowHiddenRightMenu: TMenuItem
         Caption = 'Show Hidden'

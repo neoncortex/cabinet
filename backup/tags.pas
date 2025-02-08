@@ -495,6 +495,7 @@ begin
       tagListTemp.Append(s);
 
     tagList := TagListUnique(tagListTemp);
+    tagList.Sort;
     tagList.SaveToFile(fileName);
     tagList.Free;
     tagListTemp.Free;

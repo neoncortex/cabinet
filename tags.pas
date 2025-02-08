@@ -398,6 +398,7 @@ begin
       directoryList.Append(fileName);
   end;
 
+  directoryList.Sort;
   SearchTag := directoryList;
   tagsForSearchList.Free;
   tagsFileList.Free;

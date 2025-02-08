@@ -1,30 +1,30 @@
 object Form2: TForm2
-  Left = 217
-  Height = 330
-  Top = 170
-  Width = 645
+  Left = 541
+  Height = 470
+  Top = 166
+  Width = 650
   Caption = 'Cabinet options'
-  ClientHeight = 330
-  ClientWidth = 645
+  ClientHeight = 470
+  ClientWidth = 650
   LCLVersion = '3.6.0.0'
   object PageControl1: TPageControl
     Left = 0
-    Height = 288
+    Height = 428
     Top = 0
-    Width = 645
+    Width = 650
     ActivePage = ExternalCommandsTab
     Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
     TabOrder = 0
     object ExternalCommandsTab: TTabSheet
       Caption = 'External commands'
-      ClientHeight = 255
-      ClientWidth = 635
+      ClientHeight = 395
+      ClientWidth = 640
       object FileCommandEdit: TEdit
         Left = 0
         Height = 31
         Top = 40
-        Width = 632
+        Width = 637
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
       end
@@ -39,7 +39,7 @@ object Form2: TForm2
         Left = 0
         Height = 31
         Top = 104
-        Width = 632
+        Width = 637
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 1
       end
@@ -53,8 +53,8 @@ object Form2: TForm2
       object TerminalEmulatorEdit: TEdit
         Left = 0
         Height = 31
-        Top = 176
-        Width = 632
+        Top = 168
+        Width = 637
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 2
       end
@@ -66,15 +66,110 @@ object Form2: TForm2
         Caption = 'Terminal emulator'
       end
     end
+    object FileCommandsTab: TTabSheet
+      Caption = 'File commands'
+      ClientHeight = 395
+      ClientWidth = 640
+      object FileCommandSetupBox: TGroupBox
+        Left = 0
+        Height = 184
+        Top = 8
+        Width = 641
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Caption = 'Set pattern'
+        ClientHeight = 164
+        ClientWidth = 639
+        TabOrder = 0
+        object FileCommandRegexEntry: TEdit
+          Left = 8
+          Height = 31
+          Top = 24
+          Width = 624
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 0
+        end
+        object FileCommandRegexLabel: TLabel
+          Left = 8
+          Height = 19
+          Top = 0
+          Width = 38
+          Caption = 'Regex'
+        end
+        object FileCommandCommandLabel: TLabel
+          Left = 8
+          Height = 19
+          Top = 74
+          Width = 63
+          Caption = 'Command'
+        end
+        object FileCommandCommandEntry: TEdit
+          Left = 8
+          Height = 31
+          Top = 96
+          Width = 624
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 1
+        end
+        object SetPatternButton: TButton
+          Left = 557
+          Height = 25
+          Top = 136
+          Width = 75
+          Caption = 'Set'
+          TabOrder = 2
+          OnClick = SetPatternButtonClick
+        end
+        object DeletePatternButton: TButton
+          Left = 472
+          Height = 25
+          Top = 136
+          Width = 75
+          Caption = 'Delete'
+          TabOrder = 3
+          OnClick = DeletePatternButtonClick
+        end
+      end
+      object FileCommandPatternsBox: TGroupBox
+        Left = 0
+        Height = 200
+        Top = 192
+        Width = 641
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Caption = 'Patterns'
+        ClientHeight = 180
+        ClientWidth = 639
+        TabOrder = 1
+        object FileCommandList: TListBox
+          Left = 8
+          Height = 184
+          Top = 0
+          Width = 624
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ItemHeight = 0
+          TabOrder = 0
+          TopIndex = -1
+          OnClick = FileCommandListClick
+        end
+      end
+    end
   end
   object SaveButton: TButton
-    Left = 568
+    Left = 573
     Height = 25
-    Top = 304
+    Top = 444
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Save'
     TabOrder = 1
     OnClick = SaveButtonClick
+  end
+  object ReloadButton: TButton
+    Left = 488
+    Height = 25
+    Top = 444
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = 'Reload'
+    TabOrder = 2
   end
 end
