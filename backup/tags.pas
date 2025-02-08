@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, StdCtrls, FileCtrl,
-  ExtCtrls, Menus, FileUtil, StrUtils;
+  ExtCtrls, Menus, AsyncProcess, FileUtil, StrUtils;
 
 type
 
@@ -20,6 +20,12 @@ type
     AddToMemo: TMemo;
     AddToClearButton: TButton;
     AddToButton: TButton;
+    AsyncProcess1: TAsyncProcess;
+    CommandClearButton: TButton;
+    CommandExecuteButton: TButton;
+    CommandTagEdit: TEdit;
+    CommandLabel: TLabel;
+    CommandMemo: TMemo;
     SwapFromClearAddButton: TButton;
     SwapFromClearDeleteButton: TButton;
     SwapFromButton: TButton;
@@ -62,6 +68,7 @@ type
     AddToTab: TTabSheet;
     DeleteFromTab: TTabSheet;
     SwapFromTab: TTabSheet;
+    CommandTab: TTabSheet;
     TagListBox: TListBox;
     SearchTagButton: TButton;
     ContentBox: TGroupBox;
@@ -81,6 +88,8 @@ type
     procedure CacheBuildButtonClick(Sender: TObject);
     procedure CacheListDblClick(Sender: TObject);
     procedure CacheReloadButtonClick(Sender: TObject);
+    procedure CommandClearButtonClick(Sender: TObject);
+    procedure CommandExecuteButtonClick(Sender: TObject);
     procedure DeleteButtonClick(Sender: TObject);
     procedure DeleteClearButtonClick(Sender: TObject);
     procedure DeleteFromButtonClick(Sender: TObject);
@@ -111,6 +120,7 @@ type
     function collectFiles(dirName: ansistring): TStringList;
     function tagListUnique(list: TStringList): TStringList;
     function SearchTag(tags: ansistring): TStringList;
+    procedure SetConfigDir(dir: ansistring);
   private
 
   public
@@ -119,6 +129,7 @@ type
 
 var
   Form4: TForm4;
+  configDir: ansistring;
   FileBox1: TFileListBox;
   FileBox2: TFileListBox;
   LeftPathEdit: TEdit;
@@ -132,6 +143,11 @@ implementation
 { TForm4 }
 
 // data
+procedure TForm4.SetConfigDir(dir: ansistring);
+begin
+  configDir := dir;
+end;
+
 procedure TForm4.SetFileBox1(box: TFileListBox);
 begin
   FileBox1 := box;
@@ -398,6 +414,7 @@ begin
       directoryList.Append(fileName);
   end;
 
+  directoryList.Sort;
   SearchTag := directoryList;
   tagsForSearchList.Free;
   tagsFileList.Free;
@@ -449,6 +466,30 @@ procedure TForm4.SearchTagResultListDblClick(Sender: TObject);
 begin
   FileBox2.Directory := SearchTagResultList.GetSelectedText;
   RightPathEdit.Text := SearchTagResultList.GetSelectedText;
+end;
+
+// command
+procedure TForm4.CommandClearButtonClick(Sender: TObject);
+begin
+  CommandMemo.Lines.Clear;
+end;
+
+procedure TForm4.CommandExecuteButtonClick(Sender: TObject);
+var
+  s: ansistring;
+  tagFileList: TStringList;
+  tagCommandFile: ansistring;
+begin
+  tagFileList := searchTag(commandTagEdit.Text);
+  tagCommandFile := configDir + DirectorySeparator + 'tagCommand';
+  CommandMemo.Lines.SaveToFile(tagCommandFile);
+  for s in tagFileList do
+  begin
+    ASyncProcess1.CommandLine := 'bash "' + tagCommandFile + '" "' + ExtractFileDir(s) + '"';
+    ASyncProcess1.Execute;
+  end;
+
+  tagFileList.Free;
 end;
 
 // deploy

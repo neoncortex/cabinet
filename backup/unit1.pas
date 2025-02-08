@@ -910,7 +910,7 @@ procedure TForm1.PreferencesMenuItemClick(Sender: TObject);
 begin
   Form2 := TForm2.Create(nil);
   Form2.setConfigFile(configFile);
-  Form2.Show;
+  Form2.ShowModal;
   ReadConfig;
 end;
 

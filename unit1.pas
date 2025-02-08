@@ -423,6 +423,7 @@ end;
 procedure TForm1.TagsMenuItemClick(Sender: TObject);
 begin
   Form4 := TForm4.Create(nil);
+  Form4.SetConfigDir(cabinetDirectory);
   Form4.SetTagsDir(tagsDir);
   Form4.SetFileBox1(FileBox1);
   Form4.SetFileBox2(FileBox2);
