@@ -24,10 +24,10 @@ object Form4: TForm4
       Height = 325
       Top = 32
       Width = 641
-      ActivePage = SearchTab
+      ActivePage = SwapFromTab
       Anchors = [akTop, akLeft, akRight, akBottom]
       ParentShowHint = False
-      TabIndex = 0
+      TabIndex = 8
       TabOrder = 0
       object SearchTab: TTabSheet
         Caption = 'Search'
@@ -560,6 +560,7 @@ object Form4: TForm4
       TabOrder = 0
       TopIndex = -1
       OnDblClick = CacheListDblClick
+      OnKeyDown = CacheListKeyDown
     end
     object CacheBuildButton: TButton
       Left = 8
@@ -601,6 +602,14 @@ object Form4: TForm4
     object SetMenuItem: TMenuItem
       Caption = 'Set'
       OnClick = SetMenuItemClick
+    end
+    object OpenLeftSearchMenuItem: TMenuItem
+      Caption = 'Open left'
+      OnClick = OpenLeftSearchMenuItemClick
+    end
+    object OpenRightSearchMenuItem: TMenuItem
+      Caption = 'Open right'
+      OnClick = OpenRightSearchMenuItemClick
     end
   end
   object AsyncProcess1: TAsyncProcess

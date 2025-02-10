@@ -20,7 +20,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="639"/>
         <CursorPos X="23" Y="657"/>
         <UsageCount Value="210"/>
@@ -60,10 +59,11 @@
         <ComponentName Value="Form4"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="469"/>
-        <CursorPos X="8" Y="487"/>
-        <UsageCount Value="161"/>
+        <TopLine Value="362"/>
+        <CursorPos X="27" Y="375"/>
+        <UsageCount Value="163"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -90,34 +90,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="305" Column="3" TopLine="206"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="992" Column="19" TopLine="987"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="164" Column="31" TopLine="151"/>
-      </Position>
-      <Position>
-        <Filename Value="optionform.pas"/>
-        <Caret Line="111" Column="5" TopLine="97"/>
-      </Position>
-      <Position>
-        <Filename Value="optionform.pas"/>
-        <Caret Line="110" Column="5" TopLine="96"/>
-      </Position>
-      <Position>
-        <Filename Value="optionform.pas"/>
-        <Caret Line="113" Column="94" TopLine="85"/>
-      </Position>
-      <Position>
-        <Filename Value="optionform.pas"/>
-        <Caret Line="136" Column="8" TopLine="109"/>
-      </Position>
       <Position>
         <Filename Value="optionform.pas"/>
         <Caret Line="138" Column="8" TopLine="111"/>
@@ -209,6 +181,34 @@
       <Position>
         <Filename Value="unit1.pas"/>
         <Caret Line="1011" Column="25" TopLine="994"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="495" Column="8" TopLine="477"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="370" Column="28" TopLine="354"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="371" Column="28" TopLine="355"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="378" Column="28" TopLine="362"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="486" Column="61" TopLine="472"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="381" Column="58" TopLine="372"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="192" Column="46" TopLine="182"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -26,6 +26,8 @@ type
     CommandTagEdit: TEdit;
     CommandLabel: TLabel;
     CommandMemo: TMemo;
+    OpenRightSearchMenuItem: TMenuItem;
+    OpenLeftSearchMenuItem: TMenuItem;
     SwapFromClearAddButton: TButton;
     SwapFromClearDeleteButton: TButton;
     SwapFromButton: TButton;
@@ -87,6 +89,8 @@ type
     procedure AddToClearButtonClick(Sender: TObject);
     procedure CacheBuildButtonClick(Sender: TObject);
     procedure CacheListDblClick(Sender: TObject);
+    procedure CacheListKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure CacheReloadButtonClick(Sender: TObject);
     procedure CommandClearButtonClick(Sender: TObject);
     procedure CommandExecuteButtonClick(Sender: TObject);
@@ -97,6 +101,8 @@ type
     procedure DeployButtonClick(Sender: TObject);
     procedure DeployClearButtonClick(Sender: TObject);
     procedure OpenDirectoryButtonClick(Sender: TObject);
+    procedure OpenLeftSearchMenuItemClick(Sender: TObject);
+    procedure OpenRightSearchMenuItemClick(Sender: TObject);
     procedure PathTagButtonClick(Sender: TObject);
     procedure SearchTagButtonClick(Sender: TObject);
     procedure SearchTagEditKeyDown(Sender: TObject; var Key: Word;
@@ -121,6 +127,7 @@ type
     function tagListUnique(list: TStringList): TStringList;
     function SearchTag(tags: ansistring): TStringList;
     procedure SetConfigDir(dir: ansistring);
+    procedure SetEditText(edit: TEdit; textString: ansistring);
   private
 
   public
@@ -172,6 +179,17 @@ end;
 procedure TForm4.SetRightPathEdit(pathEdit: TEdit);
 begin
   rightPathEdit := pathEdit;
+end;
+
+// edit manipulation
+procedure TForm4.SetEditText(edit: TEdit; textString: ansistring);
+begin
+  if edit.Text = '' Then
+  begin
+    edit.Text := textString;
+  end
+  else
+    edit.Text := edit.Text + ' ' + textString;
 end;
 
 // path
@@ -336,29 +354,38 @@ end;
 procedure TForm4.CacheListDblClick(Sender: TObject);
 begin
   if searchTab.IsVisible Then
-  begin
-    if searchTagEdit.Text = '' Then
-    begin
-      searchTagEdit.Text := CacheList.GetSelectedText;
-    end
-    else
-      searchTagEdit.Text := searchTagEdit.Text + ' ' + CacheList.GetSelectedText;
-  end;
+    SetEditText(SearchTagEdit, CacheList.GetSelectedText);
+
+  if commandTab.IsVisible Then
+    SetEditText(commandTagEdit, CacheList.GetSelectedText);
 
   if deployTab.IsVisible Then
-  begin
     deployMemo.Append(CacheList.GetSelectedText);
-  end;
 
   if addTab.IsVisible Then
-  begin
     addMemo.Append(CacheList.GetSelectedText);
-  end;
+
+  if addToTab.IsVisible Then
+    SetEditText(AddToEdit, CacheList.GetSelectedText);
 
   if deleteTab.IsVisible Then
-  begin
     deleteMemo.Append(CacheList.GetSelectedText);
-  end;
+
+  if deleteFromTab.IsVisible Then
+    SetEditText(DeleteFromEdit, CacheList.GetSelectedText);
+
+  if swapTab.IsVisible Then
+    swapAddMemo.Append(CacheList.GetSelectedText);
+
+  if swapFromTab.IsVisible Then
+    SetEditText(SwapFromEdit, CacheList.GetSelectedText);
+end;
+
+procedure TForm4.CacheListKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 13 Then
+    CacheListDblClick(nil);
 end;
 
 // search
@@ -466,6 +493,16 @@ procedure TForm4.SearchTagResultListDblClick(Sender: TObject);
 begin
   FileBox2.Directory := SearchTagResultList.GetSelectedText;
   RightPathEdit.Text := SearchTagResultList.GetSelectedText;
+end;
+
+procedure TForm4.OpenLeftSearchMenuItemClick(Sender: TObject);
+begin
+  FileBox1.Directory := SearchTagResultList.GetSelectedText;
+end;
+
+procedure TForm4.OpenRightSearchMenuItemClick(Sender: TObject);
+begin
+  FileBox2.Directory := SearchTagResultList.GetSelectedText;
 end;
 
 // command

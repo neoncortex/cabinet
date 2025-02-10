@@ -603,6 +603,14 @@ object Form4: TForm4
       Caption = 'Set'
       OnClick = SetMenuItemClick
     end
+    object OpenLeftSearchMenuItem: TMenuItem
+      Caption = 'Open left'
+      OnClick = OpenLeftSearchMenuItemClick
+    end
+    object OpenRightSearchMenuItem: TMenuItem
+      Caption = 'Open right'
+      OnClick = OpenRightSearchMenuItemClick
+    end
   end
   object AsyncProcess1: TAsyncProcess
     Active = False
