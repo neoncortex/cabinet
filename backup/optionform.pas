@@ -35,6 +35,7 @@ type
     ExternalCommandsTab: TTabSheet;
     procedure DeletePatternButtonClick(Sender: TObject);
     procedure FileCommandListClick(Sender: TObject);
+    procedure ReloadButtonClick(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
     procedure setConfigFile(fileName: ansistring);
     procedure SetPatternButtonClick(Sender: TObject);
@@ -156,6 +157,11 @@ begin
   pattern := SplitString(FileCommandList.GetSelectedText, ' :::: ');
   FileCommandRegexEntry.Text := pattern[1];
   FileCommandCommandEntry.Text := pattern[2];
+end;
+
+procedure TForm2.ReloadButtonClick(Sender: TObject);
+begin
+  setConfigFile(configFile);
 end;
 
 procedure TForm2.DeletePatternButtonClick(Sender: TObject);

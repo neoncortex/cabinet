@@ -503,6 +503,10 @@ object Form1: TForm1
     end
     object ToolsMenuItem: TMenuItem
       Caption = 'Tools'
+      object FindMenuItem: TMenuItem
+        Caption = 'Find'
+        OnClick = FindMenuItemClick
+      end
       object RecipesMenuItem: TMenuItem
         Caption = 'Recipes'
         OnClick = RecipesMenuItemClick

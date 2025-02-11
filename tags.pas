@@ -237,6 +237,8 @@ begin
         tempList := collectFiles(fileName);
         for t in tempList do
           list.Append(t);
+
+        tempList.Free;
       end
       else
       begin

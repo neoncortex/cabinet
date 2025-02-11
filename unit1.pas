@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, FileCtrl,
   StdCtrls, Menus, ExtCtrls, AsyncProcess, StrUtils, FileUtil, RegExpr, Clipbrd,
-  Buttons, optionForm, recipes, tags;
+  Buttons, optionForm, recipes, tags, find, openFiles;
 
 type
 
@@ -17,6 +17,7 @@ type
     AsyncProcess1: TAsyncProcess;
     CopyFilePathLeftMenuItem: TMenuItem;
     CopyFilePathRightMenuItem: TMenuItem;
+    FindMenuItem: TMenuItem;
     TagsMenuItem: TMenuItem;
     RecipesMenuItem: TMenuItem;
     Separator9: TMenuItem;
@@ -127,6 +128,7 @@ type
     procedure FilterRightButtonClick(Sender: TObject);
     procedure FilterRightEditKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FindMenuItemClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure GoToLeftMenuItemClick(Sender: TObject);
     procedure GoToRightMenuItemClick(Sender: TObject);
@@ -157,7 +159,6 @@ type
       Shift: TShiftState);
     procedure ShowHiddenLeftMenuClick(Sender: TObject);
     procedure ShowHiddenRightMenuClick(Sender: TObject);
-    procedure OpenFiles(box: integer; command: ansistring);
     function GetDirectoryName(box: integer): ansistring;
     procedure TagsMenuItemClick(Sender: TObject);
     function UnpackDirName(dirName: ansistring): ansistring;
@@ -348,54 +349,6 @@ end;
 procedure TForm1.LinkRightMenuItemClick(Sender: TObject);
 begin
   DynamicManipulateFiles(2, 'link');
-end;
-
-procedure TForm1.OpenFiles(box: integer; command: ansistring);
-var
-  boxDir: ansistring;
-  commandLine: ansistring;
-  fileName: ansistring;
-  files: ansistring;
-  patternItem: array of ansistring;
-  regex: TRegExpr;
-  s: ansistring;
-  t: ansistring;
-begin
-  if box = 1 Then
-  begin
-    boxDir := FileBox1.Directory;
-    files := FileBox1.GetSelectedText;
-  end
-  else
-  begin
-    boxDir := FileBox2.Directory;
-    files := FileBox2.GetSelectedText;
-  end;
-
-  regex := TRegExpr.Create;
-  for s in SplitString(files, LineEnding) do
-  begin
-    fileName := ExpandFileName(boxDir + DirectorySeparator + s);
-    if FileExists(fileName) = True Then
-    begin
-      commandLine := StringReplace(command, '%s', fileName, [rfReplaceAll]);
-      for t in patterns do
-      begin
-        patternItem := SplitString(t, ' :::: ');
-        regex.Expression := patternItem[1];
-        if regex.exec(fileName) Then
-        begin
-          commandLine := StringReplace(patternItem[2], '%s', fileName, [rfReplaceAll]);
-          break;
-        end;
-      end;
-
-      ASyncProcess1.CommandLine := commandLine;
-      ASyncProcess1.Execute;
-    end;
-  end;
-
-  regex.Free;
 end;
 
 function TForm1.UnpackDirName(dirName: ansistring): ansistring;
@@ -604,6 +557,7 @@ end;
 
 procedure TForm1.DoubleClickFiles(box: integer);
 var
+  boxList: TFileListBox;
   files: ansistring;
   filter: TEdit;
   filterButton: TButton;
@@ -612,6 +566,7 @@ var
 begin
   if box = 1 Then
   begin
+    boxList := FileBox1;
     files := FileBox1.GetSelectedText;
     filter := FilterLeftEdit;
     filterButton := FilterLeftButton;
@@ -619,6 +574,7 @@ begin
   end
   else
   begin
+    boxList := FileBox2;
     files := FileBox2.GetSelectedText;
     filter := FilterRightEdit;
     filterButton := FilterRightButton;
@@ -633,7 +589,7 @@ begin
   end
   else
   begin
-    OpenFiles(box, fileCommand);
+    OpenBoxFiles(boxList, fileCommand, patterns);
   end;
 
   if not keep.Checked Then
@@ -694,6 +650,18 @@ procedure TForm1.FilterRightEditKeyDown(Sender: TObject; var Key: Word;
 begin
   if key = 13 Then
     FilterRightButtonClick(nil);
+end;
+
+procedure TForm1.FindMenuItemClick(Sender: TObject);
+begin
+  Form5 := TForm5.Create(nil);
+  Form5.SetFileBox1(FileBox1);
+  Form5.SetFileBox2(FileBox2);
+  Form5.SetLeftPathEdit(LeftPathEdit);
+  Form5.SetRightPathEdit(RightPathEdit);
+  Form5.SetFileCommand(fileCommand);
+  Form5.SetPatterns(patterns);
+  Form5.Show;
 end;
 
 procedure TForm1.ManipulateFiles(box: integer; what: ansistring);
@@ -899,22 +867,22 @@ end;
 
 procedure TForm1.OpenLeftButtonClick(Sender: TObject);
 begin
-  OpenFiles(1, fileCommand);
+  OpenBoxFiles(FileBox1, fileCommand, patterns);
 end;
 
 procedure TForm1.OpenLeftMenuClick(Sender: TObject);
 begin
-  OpenFiles(1, fileCommand);
+  OpenBoxFiles(FileBox1, fileCommand, patterns);
 end;
 
 procedure TForm1.OpenRightButtonClick(Sender: TObject);
 begin
-  OpenFiles(2, fileCommand);
+  OpenBoxFiles(FileBox2, fileCommand, patterns);
 end;
 
 procedure TForm1.OpenRightMenuClick(Sender: TObject);
 begin
-  OpenFiles(2, fileCommand);
+  OpenBoxFiles(FileBox2, fileCommand, patterns);
 end;
 
 procedure TForm1.PreferencesMenuItemClick(Sender: TObject);
@@ -1140,22 +1108,22 @@ end;
 
 procedure TForm1.EditLeftButtonClick(Sender: TObject);
 begin
-  OpenFiles(1, defaultEditor);
+  OpenBoxFiles(FileBox1, defaultEditor, patterns);
 end;
 
 procedure TForm1.EditLeftMenuClick(Sender: TObject);
 begin
-  OpenFiles(1, defaultEditor);
+  OpenBoxFiles(FileBox1, defaultEditor, patterns);
 end;
 
 procedure TForm1.EditRightButtonClick(Sender: TObject);
 begin
-  OpenFiles(2, defaultEditor);
+  OpenBoxFiles(FileBox2, defaultEditor, patterns);
 end;
 
 procedure TForm1.EditRightMenuClick(Sender: TObject);
 begin
-  OpenFiles(2, defaultEditor);
+  OpenBoxFiles(FileBox2, defaultEditor, patterns);
 end;
 
 

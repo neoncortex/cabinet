@@ -24,10 +24,10 @@ object Form4: TForm4
       Height = 325
       Top = 32
       Width = 641
-      ActivePage = SwapFromTab
+      ActivePage = SearchTab
       Anchors = [akTop, akLeft, akRight, akBottom]
       ParentShowHint = False
-      TabIndex = 8
+      TabIndex = 0
       TabOrder = 0
       object SearchTab: TTabSheet
         Caption = 'Search'
@@ -45,7 +45,7 @@ object Form4: TForm4
         object SearchTagButton: TButton
           Left = 551
           Height = 25
-          Top = 0
+          Top = 6
           Width = 75
           Anchors = [akTop, akRight]
           Caption = 'Search'

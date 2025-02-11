@@ -133,6 +133,18 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="find.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form5"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="openfiles.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="openFiles"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

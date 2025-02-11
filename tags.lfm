@@ -45,7 +45,7 @@ object Form4: TForm4
         object SearchTagButton: TButton
           Left = 551
           Height = 25
-          Top = 0
+          Top = 6
           Width = 75
           Anchors = [akTop, akRight]
           Caption = 'Search'

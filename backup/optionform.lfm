@@ -171,5 +171,6 @@ object Form2: TForm2
     Anchors = [akRight, akBottom]
     Caption = 'Reload'
     TabOrder = 2
+    OnClick = ReloadButtonClick
   end
 end
