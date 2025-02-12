@@ -161,10 +161,13 @@ object Form5: TForm5
   object MatchPathCheck: TCheckBox
     Left = 360
     Height = 23
+    Hint = 'When matching by name, match using the full path, instead of the file name alone.'
     Top = 64
     Width = 95
     Anchors = [akTop, akLeft, akRight]
     Caption = 'Match path'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 14
   end
   object SelectDirectoryDialog1: TSelectDirectoryDialog

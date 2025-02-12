@@ -57,9 +57,10 @@
         <ComponentName Value="Form4"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="218"/>
-        <CursorPos X="23" Y="241"/>
+        <TopLine Value="588"/>
+        <CursorPos X="32" Y="596"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -70,11 +71,10 @@
         <ComponentName Value="Form5"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="195"/>
-        <CursorPos X="32" Y="208"/>
-        <UsageCount Value="64"/>
+        <TopLine Value="170"/>
+        <CursorPos X="31" Y="283"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -103,7 +103,7 @@
         <Filename Value="collect.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="6"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="32"/>
       </Unit>
       <Unit>
         <Filename Value="openfiles.pas"/>
@@ -112,59 +112,11 @@
         <EditorIndex Value="1"/>
         <TopLine Value="32"/>
         <CursorPos X="16" Y="69"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="36"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="1160" Column="10" TopLine="1136"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="1165" Column="10" TopLine="1141"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="1170" Column="10" TopLine="1146"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="1175" Column="10" TopLine="1151"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="10" Column="54"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="162" Column="26" TopLine="139"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="356" Column="27" TopLine="332"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="10" Column="54"/>
-      </Position>
-      <Position>
-        <Filename Value="openfiles.pas"/>
-        <Caret Line="9" Column="89"/>
-      </Position>
-      <Position>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="924" Column="24" TopLine="361"/>
-      </Position>
-      <Position>
-        <Filename Value="find.pas"/>
-        <Caret Line="94" Column="20" TopLine="80"/>
-      </Position>
-      <Position>
-        <Filename Value="find.pas"/>
-        <Caret Line="96" Column="20" TopLine="82"/>
-      </Position>
       <Position>
         <Filename Value="unit1.pas"/>
         <Caret Line="713" Column="35" TopLine="697"/>
@@ -236,6 +188,54 @@
       <Position>
         <Filename Value="find.pas"/>
         <Caret Line="203" Column="40" TopLine="191"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="241" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="242" Column="23" TopLine="214"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="327" Column="61" TopLine="308"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="320" TopLine="311"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="327" Column="31" TopLine="311"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="430" Column="61" TopLine="413"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="406" Column="20" TopLine="402"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="431" Column="31" TopLine="417"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="590" Column="33" TopLine="579"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="651" Column="59" TopLine="629"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="128" Column="64" TopLine="115"/>
+      </Position>
+      <Position>
+        <Filename Value="tags.pas"/>
+        <Caret Line="260" Column="25" TopLine="233"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -21,11 +21,13 @@ type
     AddToClearButton: TButton;
     AddToButton: TButton;
     AsyncProcess1: TAsyncProcess;
+    DepthCheck: TCheckBox;
     CommandClearButton: TButton;
     CommandExecuteButton: TButton;
     CommandTagEdit: TEdit;
     CommandLabel: TLabel;
     CommandMemo: TMemo;
+    DepthEdit: TEdit;
     OpenRightSearchMenuItem: TMenuItem;
     OpenLeftSearchMenuItem: TMenuItem;
     SwapFromClearAddButton: TButton;
@@ -100,6 +102,7 @@ type
     procedure DeleteFromClearButtonClick(Sender: TObject);
     procedure DeployButtonClick(Sender: TObject);
     procedure DeployClearButtonClick(Sender: TObject);
+    procedure DepthCheckChange(Sender: TObject);
     procedure OpenDirectoryButtonClick(Sender: TObject);
     procedure OpenLeftSearchMenuItemClick(Sender: TObject);
     procedure OpenRightSearchMenuItemClick(Sender: TObject);
@@ -123,7 +126,7 @@ type
     procedure SwapFromButtonClick(Sender: TObject);
     procedure SwapFromClearAddButtonClick(Sender: TObject);
     procedure SwapFromClearDeleteButtonClick(Sender: TObject);
-    function collectFiles(dirName: ansistring): TStringList;
+    function collectFiles(dirName: ansistring; counter: integer): TStringList;
     function tagListUnique(list: TStringList): TStringList;
     function SearchTag(tags: ansistring): TStringList;
     procedure SetConfigDir(dir: ansistring);
@@ -213,7 +216,7 @@ begin
 end;
 
 // collect
-function TForm4.collectFiles(dirName: ansistring): TStringList;
+function TForm4.collectFiles(dirName: ansistring; counter: integer): TStringList;
 var
   fileName: ansistring;
   list: TStringList;
@@ -234,11 +237,28 @@ begin
       fileName := expandFileName(dirName + directorySeparator + s.Name);
       if DirectoryExists(fileName) Then
       begin
-        tempList := collectFiles(fileName);
-        for t in tempList do
-          list.Append(t);
+        tempList := nil;
+        if DepthCheck.Checked Then
+        begin
+          if counter = 0 Then
+          begin
+            continue;
+          end
+          else
+          begin
+            tempList := collectFiles(fileName, counter - 1);
+          end;
+        end
+        else
+          tempList := collectFiles(fileName, counter);
 
-        tempList.Free;
+        if tempList <> nil Then
+        begin
+          for t in tempList do
+            list.Append(t);
+
+          tempList.Free;
+        end;
       end
       else
       begin
@@ -307,6 +327,7 @@ procedure TForm4.CacheBuildButtonClick(Sender: TObject);
 var
   cacheDir: ansistring;
   cacheFile: ansistring;
+  counter: integer;
   filep: textFile;
   fileName: ansistring;
   s: ansistring;
@@ -314,7 +335,14 @@ var
   tagListTemp: TStringList;
   tagsFileList: TStringList;
 begin
-  tagsFileList := collectFiles(PathTagEdit.Text);
+  try
+    counter := StrToInt(DepthEdit.Text);
+  except
+    on E: Exception do
+      counter := 0;
+  end;
+
+  tagsFileList := collectFiles(PathTagEdit.Text, counter);
   tagListTemp := TStringList.Create;
   for fileName in tagsFileList do
   begin
@@ -393,6 +421,7 @@ end;
 // search
 function TForm4.SearchTag(tags: ansistring): TStringList;
 var
+  counter: integer;
   directoryList: TStringList;
   fileName: ansistring;
   filep: textFile;
@@ -411,7 +440,13 @@ begin
 
   tagsForSearchList.Sort;
   directoryList := TStringList.Create;
-  tagsFileList := collectFiles(PathTagEdit.Text);
+  try
+    counter := StrToInt(DepthEdit.Text);
+  except
+    on E: Exception do
+      counter := 0;
+  end;
+  tagsFileList := collectFiles(PathTagEdit.Text, counter);
   for fileName in tagsFileList do
   begin
     match := False;
@@ -551,9 +586,20 @@ begin
   DeployMemo.Lines.Clear;
 end;
 
+procedure TForm4.DepthCheckChange(Sender: TObject);
+begin
+  if DepthCheck.Checked Then
+  begin
+    DepthEdit.Enabled := True;
+  end
+  else
+    DepthEdit.Enabled := False;
+end;
+
 // add
 procedure TForm4.AddTags(Memo: TMemo; path: TEdit = nil);
 var
+  counter: integer;
   fileName: ansistring;
   s: ansistring;
   tagList: TStringList;
@@ -562,7 +608,14 @@ var
 begin
   if path = nil Then
   begin
-    tagsFileList := collectFiles(PathTagEdit.Text);
+    try
+      counter := StrToInt(DepthEdit.Text);
+    except
+      on E: Exception do
+        counter := 0;
+    end;
+
+    tagsFileList := collectFiles(PathTagEdit.Text, counter);
   end
   else
     tagsFileList := searchTag(path.Text);
@@ -616,7 +669,14 @@ var
 begin
   if path = nil Then
   begin
-    tagsFileList := collectFiles(PathTagEdit.Text);
+    try
+      counter := StrToInt(DepthEdit.Text);
+    except
+      on E: Exception do
+        counter := 0;
+    end;
+
+    tagsFileList := collectFiles(PathTagEdit.Text, counter);
   end
   else
     tagsFileList := searchTag(path.Text);

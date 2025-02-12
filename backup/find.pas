@@ -13,6 +13,7 @@ type
   { TForm5 }
 
   TForm5 = class(TForm)
+    MatchPathCheck: TCheckBox;
     OpenButton: TButton;
     DepthCheck: TCheckBox;
     CopyPathButton: TButton;
@@ -151,6 +152,7 @@ function TForm5.collectFiles(dirName: ansistring; counter: integer): TStringList
 var
   fileName: ansistring;
   list: TStringList;
+  query: ansistring;
   regex: TRegExpr;
   s: TRawByteSearchRec;
   t: ansistring;
@@ -199,7 +201,11 @@ begin
         begin
           try
             regex.Expression := findEdit.Text;
-            if regex.exec(fileName) Then
+            query := s.Name;
+            if MatchPathCheck.Checked Then
+              query := fileName;
+
+            if regex.exec(query) Then
               list.Append(fileName);
           except
             on E: Exception do

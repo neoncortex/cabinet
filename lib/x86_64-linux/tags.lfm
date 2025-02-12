@@ -1,7 +1,7 @@
 object Form4: TForm4
-  Left = 524
+  Left = 520
   Height = 627
-  Top = 43
+  Top = 48
   Width = 640
   Caption = 'Cabinet - Tags'
   ClientHeight = 627
@@ -21,8 +21,8 @@ object Form4: TForm4
     TabOrder = 0
     object TagsTabs: TPageControl
       Left = 0
-      Height = 325
-      Top = 32
+      Height = 293
+      Top = 64
       Width = 641
       ActivePage = SearchTab
       Anchors = [akTop, akLeft, akRight, akBottom]
@@ -31,7 +31,7 @@ object Form4: TForm4
       TabOrder = 0
       object SearchTab: TTabSheet
         Caption = 'Search'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         object SearchTagEdit: TEdit
           Left = 0
@@ -54,17 +54,17 @@ object Form4: TForm4
         end
         object SearchResultBox: TGroupBox
           Left = 0
-          Height = 261
+          Height = 229
           Top = 32
           Width = 626
           Anchors = [akTop, akLeft, akRight, akBottom]
           Caption = 'Result'
-          ClientHeight = 241
+          ClientHeight = 209
           ClientWidth = 624
           TabOrder = 2
           object TagListBox: TListBox
             Left = 0
-            Height = 241
+            Height = 209
             Top = 0
             Width = 167
             Align = alLeft
@@ -74,7 +74,7 @@ object Form4: TForm4
           end
           object SearchTagResultList: TListBox
             Left = 168
-            Height = 243
+            Height = 211
             Top = 0
             Width = 454
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -89,7 +89,7 @@ object Form4: TForm4
       end
       object CommandTab: TTabSheet
         Caption = 'Command'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         object CommandTagEdit: TEdit
           Left = 40
@@ -108,7 +108,7 @@ object Form4: TForm4
         end
         object CommandMemo: TMemo
           Left = 0
-          Height = 205
+          Height = 173
           Top = 48
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -117,7 +117,7 @@ object Form4: TForm4
         object CommandClearButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akLeft, akBottom]
           Caption = 'Clear'
@@ -127,7 +127,7 @@ object Form4: TForm4
         object CommandExecuteButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Execute'
@@ -137,11 +137,11 @@ object Form4: TForm4
       end
       object DeployTab: TTabSheet
         Caption = 'Deploy'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         object DeployMemo: TMemo
           Left = 0
-          Height = 254
+          Height = 222
           Top = 0
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -151,7 +151,7 @@ object Form4: TForm4
         object DeployButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Deploy'
@@ -161,7 +161,7 @@ object Form4: TForm4
         object DeployClearButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akLeft, akBottom]
           Caption = 'Clear'
@@ -172,13 +172,13 @@ object Form4: TForm4
       object AddTab: TTabSheet
         Hint = 'Add tags to the directory, and its subdirectories'
         Caption = 'Add'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         ParentShowHint = False
         ShowHint = True
         object AddMemo: TMemo
           Left = 0
-          Height = 254
+          Height = 222
           Top = 0
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -188,7 +188,7 @@ object Form4: TForm4
         object AddButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Add'
@@ -198,7 +198,7 @@ object Form4: TForm4
         object AddClearButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akLeft, akBottom]
           Caption = 'Clear'
@@ -208,7 +208,7 @@ object Form4: TForm4
       end
       object AddToTab: TTabSheet
         Caption = 'Add to'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         object AddToEdit: TEdit
           Left = 40
@@ -227,7 +227,7 @@ object Form4: TForm4
         end
         object AddToMemo: TMemo
           Left = 0
-          Height = 205
+          Height = 173
           Top = 48
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -237,7 +237,7 @@ object Form4: TForm4
         object AddToClearButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akLeft, akBottom]
           Caption = 'Clear'
@@ -247,7 +247,7 @@ object Form4: TForm4
         object AddToButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Add'
@@ -258,13 +258,13 @@ object Form4: TForm4
       object DeleteTab: TTabSheet
         Hint = 'Delete tags from the directory, and its subdirectories'
         Caption = 'Delete'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         ParentShowHint = False
         ShowHint = True
         object DeleteMemo: TMemo
           Left = 0
-          Height = 254
+          Height = 222
           Top = 0
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -274,7 +274,7 @@ object Form4: TForm4
         object DeleteButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Delete'
@@ -284,7 +284,7 @@ object Form4: TForm4
         object DeleteClearButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akLeft, akBottom]
           Caption = 'Clear'
@@ -294,7 +294,7 @@ object Form4: TForm4
       end
       object DeleteFromTab: TTabSheet
         Caption = 'Delete from'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         object DeleteFromLabel: TLabel
           Left = 0
@@ -313,7 +313,7 @@ object Form4: TForm4
         end
         object DeleteFromMemo: TMemo
           Left = 0
-          Height = 206
+          Height = 174
           Top = 48
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -323,7 +323,7 @@ object Form4: TForm4
         object DeleteFromClearButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akLeft, akBottom]
           Caption = 'Clear'
@@ -333,7 +333,7 @@ object Form4: TForm4
         object DeleteFromButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Delete'
@@ -344,23 +344,23 @@ object Form4: TForm4
       object SwapTab: TTabSheet
         Hint = 'Swap tags from the directory, and its subdirectories'
         Caption = 'Swap'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         ParentShowHint = False
         ShowHint = True
         object SwapAddBox: TGroupBox
           Left = 0
-          Height = 126
+          Height = 94
           Top = 0
           Width = 631
           Anchors = [akTop, akLeft, akRight, akBottom]
           Caption = 'Add'
-          ClientHeight = 106
+          ClientHeight = 74
           ClientWidth = 629
           TabOrder = 0
           object SwapAddMemo: TMemo
             Left = 0
-            Height = 103
+            Height = 71
             Top = 0
             Width = 622
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -370,17 +370,17 @@ object Form4: TForm4
         end
         object SwapDeleteBox: TGroupBox
           Left = 0
-          Height = 134
+          Height = 102
           Top = 120
           Width = 631
           Anchors = [akTop, akLeft, akRight, akBottom]
           Caption = 'Delete'
-          ClientHeight = 114
+          ClientHeight = 82
           ClientWidth = 629
           TabOrder = 1
           object SwapDeleteMemo: TMemo
             Left = 0
-            Height = 112
+            Height = 80
             Top = 0
             Width = 622
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -391,7 +391,7 @@ object Form4: TForm4
         object SwapButton: TButton
           Left = 556
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Swap'
@@ -401,7 +401,7 @@ object Form4: TForm4
         object SwapClearAddButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 88
           Anchors = [akLeft, akBottom]
           Caption = 'Clear add'
@@ -411,7 +411,7 @@ object Form4: TForm4
         object SwapClearDeleteButton: TButton
           Left = 96
           Height = 25
-          Top = 257
+          Top = 225
           Width = 88
           Anchors = [akLeft, akBottom]
           Caption = 'Clear Delete'
@@ -421,7 +421,7 @@ object Form4: TForm4
       end
       object SwapFromTab: TTabSheet
         Caption = 'Swap from'
-        ClientHeight = 292
+        ClientHeight = 260
         ClientWidth = 631
         object SwapFromLabel: TLabel
           Left = 0
@@ -440,17 +440,17 @@ object Form4: TForm4
         end
         object SwapFromAddBox: TGroupBox
           Left = 0
-          Height = 117
+          Height = 85
           Top = 40
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
           Caption = 'Add'
-          ClientHeight = 97
+          ClientHeight = 65
           ClientWidth = 628
           TabOrder = 1
           object SwapFromAddMemo: TMemo
             Left = 8
-            Height = 71
+            Height = 39
             Top = 0
             Width = 614
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -460,17 +460,17 @@ object Form4: TForm4
         end
         object SwapFromDeleteBox: TGroupBox
           Left = 0
-          Height = 117
+          Height = 85
           Top = 136
           Width = 630
           Anchors = [akTop, akLeft, akRight, akBottom]
           Caption = 'Delete'
-          ClientHeight = 97
+          ClientHeight = 65
           ClientWidth = 628
           TabOrder = 2
           object SwapFromDeleteMemo: TMemo
             Left = 8
-            Height = 95
+            Height = 63
             Top = 0
             Width = 614
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -481,7 +481,7 @@ object Form4: TForm4
         object SwapFromClearAddButton: TButton
           Left = 0
           Height = 25
-          Top = 257
+          Top = 225
           Width = 88
           Anchors = [akLeft, akBottom]
           Caption = 'Clear add'
@@ -491,7 +491,7 @@ object Form4: TForm4
         object SwapFromClearDeleteButton: TButton
           Left = 96
           Height = 25
-          Top = 257
+          Top = 225
           Width = 88
           Anchors = [akLeft, akBottom]
           Caption = 'Clear Delete'
@@ -501,7 +501,7 @@ object Form4: TForm4
         object SwapFromButton: TButton
           Left = 555
           Height = 25
-          Top = 257
+          Top = 225
           Width = 75
           Anchors = [akRight, akBottom]
           Caption = 'Swap'
@@ -523,7 +523,7 @@ object Form4: TForm4
       Height = 25
       Top = 4
       Width = 75
-      Anchors = [akRight, akBottom]
+      Anchors = [akTop, akRight]
       Caption = 'Select'
       TabOrder = 2
       OnClick = PathTagButtonClick
@@ -533,9 +533,30 @@ object Form4: TForm4
       Height = 25
       Top = 4
       Width = 75
+      Anchors = [akTop, akRight]
       Caption = 'Open'
       TabOrder = 3
       OnClick = OpenDirectoryButtonClick
+    end
+    object DepthEdit: TEdit
+      Left = 382
+      Height = 31
+      Top = 32
+      Width = 80
+      Anchors = [akTop, akRight]
+      Enabled = False
+      TabOrder = 4
+      Text = '0'
+    end
+    object DepthCheck: TCheckBox
+      Left = 312
+      Height = 23
+      Top = 32
+      Width = 65
+      Anchors = [akTop, akRight]
+      Caption = 'Depth'
+      TabOrder = 5
+      OnChange = DepthCheckChange
     end
   end
   object CacheBox: TGroupBox

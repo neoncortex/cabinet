@@ -158,6 +158,15 @@ object Form5: TForm5
     TabOrder = 13
     OnClick = OpenButtonClick
   end
+  object MatchPathCheck: TCheckBox
+    Left = 360
+    Height = 23
+    Top = 64
+    Width = 95
+    Anchors = [akTop, akLeft, akRight]
+    Caption = 'Match path'
+    TabOrder = 14
+  end
   object SelectDirectoryDialog1: TSelectDirectoryDialog
     Left = 152
     Top = 183
