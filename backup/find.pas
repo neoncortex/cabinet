@@ -35,10 +35,13 @@ type
     procedure DepthCheckChange(Sender: TObject);
     procedure FindButtonClick(Sender: TObject);
     function contentMatch(fileName: ansistring): TStringList;
-    function collectFiles(dirName: ansistring): TStringList;
+    function collectFiles(dirName: ansistring; counter: integer): TStringList;
+    procedure FindEditKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState
+      );
     procedure OpenButtonClick(Sender: TObject);
     procedure OpenLeftButtonClick(Sender: TObject);
     procedure OpenRightButtonClick(Sender: TObject);
+    procedure ResultListDblClick(Sender: TObject);
     procedure SetFileBox1(box: TFileListBox);
     procedure SetFileBox2(box: TFileListBox);
     procedure SetLeftPathEdit(edit: TEdit);
@@ -58,7 +61,6 @@ var
   FileBox2: TFileListBox;
   LeftPathEdit: TEdit;
   RightPathEdit: TEdit;
-  depthCounter: integer;
   fileCommand: ansistring;
   patterns: TStringList;
 implementation
@@ -120,11 +122,21 @@ begin
     while not eof(filep) do
     begin
       readLn(filep, s);
-      regex.Expression := findEdit.Text;
-      if regex.exec(s) Then
-      begin
-        list.Append(fileName);
-        break;
+      try
+        regex.Expression := findEdit.Text;
+        if regex.exec(s) Then
+        begin
+          list.Append(fileName);
+          break;
+        end;
+      except
+        on E: Exception do
+        begin
+          regex.Free;
+          closeFile(filep);
+          contentMatch := list;
+          exit;
+        end;
       end;
     end;
 
@@ -135,7 +147,7 @@ begin
   contentMatch := list;
 end;
 
-function TForm5.collectFiles(dirName: ansistring): TStringList;
+function TForm5.collectFiles(dirName: ansistring; counter: integer): TStringList;
 var
   fileName: ansistring;
   list: TStringList;
@@ -146,13 +158,6 @@ var
 begin
   list := TStringList.Create;
   regex := TRegExpr.Create;
-  try
-    depthCounter := StrToInt(DepthEdit.Text);
-  except
-    on E: Exception do
-      depthCounter := 0;
-  end;
-
   if findFirst(dirName + directorySeparator + '*', faAnyFile or faSymLink, s) = 0 Then
   begin
     repeat
@@ -168,14 +173,17 @@ begin
         tempList := nil;
         if DepthCheck.Checked Then
         begin
-          if depthCounter > 0 Then
+          if counter = 0 Then
           begin
-            depthCounter := depthCounter - 1;
-            tempList := collectFiles(fileName);
+            continue;
+          end
+          else
+          begin
+            tempList := collectFiles(fileName, counter - 1);
           end;
         end
         else
-          tempList := collectFiles(fileName);
+          tempList := collectFiles(fileName, counter);
 
         if tempList <> nil Then
         begin
@@ -189,9 +197,19 @@ begin
       begin
         if ByNameRadio.Checked Then
         begin
-          regex.Expression := findEdit.Text;
-          if regex.exec(s.Name) Then
-            list.Append(fileName);
+          try
+            regex.Expression := findEdit.Text;
+            if regex.exec(fileName) Then
+              list.Append(fileName);
+          except
+            on E: Exception do
+            begin
+              regex.Free;
+              FindClose(s);
+              collectFiles := list;
+              exit;
+            end;
+          end;
         end;
 
         if ByContentRadio.Checked Then
@@ -212,6 +230,13 @@ begin
   collectFiles := list;
 end;
 
+procedure TForm5.FindEditKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 13 Then
+    FindButtonClick(nil);
+end;
+
 procedure TForm5.OpenButtonClick(Sender: TObject);
 begin
   OpenListFiles(ResultList, fileCommand, patterns);
@@ -229,15 +254,28 @@ begin
   FileBox2.Directory := ExtractFilePath(ResultList.GetSelectedText);
 end;
 
+procedure TForm5.ResultListDblClick(Sender: TObject);
+begin
+  OpenButtonClick(nil);
+end;
+
 procedure TForm5.FindButtonClick(Sender: TObject);
 var
+  counter: integer;
   res: TStringList;
   s: ansistring;
 begin
   if findEdit.Text <> '' Then
   begin
     ResultList.Items.Clear;
-    res := collectFiles(pathEdit.Text);
+    try
+      counter := StrToInt(DepthEdit.Text);
+    except
+      on E: Exception do
+        counter := 0;
+    end;
+
+    res := collectFiles(pathEdit.Text, counter);
     res.Sort;
     for s in res do
     begin

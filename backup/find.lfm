@@ -14,6 +14,7 @@ object Form5: TForm5
     Width = 562
     Anchors = [akTop, akLeft, akRight]
     TabOrder = 0
+    OnKeyDown = FindEditKeyDown
   end
   object FindButton: TButton
     Left = 639
@@ -35,6 +36,7 @@ object Form5: TForm5
     MultiSelect = True
     TabOrder = 2
     TopIndex = -1
+    OnDblClick = ResultListDblClick
   end
   object OpenRightButton: TButton
     Left = 560
