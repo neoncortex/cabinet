@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, FileCtrl,
   StdCtrls, Menus, ExtCtrls, AsyncProcess, StrUtils, FileUtil, RegExpr, Clipbrd,
-  Buttons, optionForm, recipes, tags, find, openFiles, commandOutput;
+  Buttons, optionForm, recipes, tags, find, openFiles;
 
 type
 
@@ -15,6 +15,7 @@ type
 
   TForm1 = class(TForm)
     AsyncProcess1: TAsyncProcess;
+    CommandStopButton: TButton;
     CopyFilePathLeftMenuItem: TMenuItem;
     CopyFilePathRightMenuItem: TMenuItem;
     FindMenuItem: TMenuItem;
@@ -99,6 +100,7 @@ type
     ViewMenuLeft: TMenuItem;
     procedure CommandClearButtonClick(Sender: TObject);
     procedure CommandExecuteButtonClick(Sender: TObject);
+    procedure CommandStopButtonClick(Sender: TObject);
     procedure CopyFilePathLeftMenuItemClick(Sender: TObject);
     procedure CopyFilePathRightMenuItemClick(Sender: TObject);
     procedure CopyLeftMenuItemClick(Sender: TObject);
@@ -614,7 +616,8 @@ end;
 procedure TForm1.FileBox2KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  DoubleClickFiles(2);
+  if key = 13 Then
+    DoubleClickFiles(2);
 end;
 
 procedure TForm1.FileMenuQuitClick(Sender: TObject);
@@ -1013,16 +1016,20 @@ begin
     selectionRight := 'noSelection';
 
   CommandMemo.Lines.SaveToFile(commandScript);
-  commandLine := 'bash -c "bash'
+  commandLine := 'bash'
     + ' "' + commandScript + '"'
     + ' "' + ExpandFileName(FileBox1.Directory) + '"'
     + ' "' + ExpandFileName(FileBox2.Directory) + '"'
     + ' "' + selectionLeft + '"'
-    + ' "' + selectionRight + '"'
-    + '"';
+    + ' "' + selectionRight + '"';
 
   ASyncProcess1.CommandLine := commandLine;
   ASyncProcess1.Execute;
+end;
+
+procedure TForm1.CommandStopButtonClick(Sender: TObject);
+begin
+  ASyncProcess1.Terminate(1);
 end;
 
 procedure TForm1.CopyFilePath(box: TFileListBox);
