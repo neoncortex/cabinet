@@ -1,0 +1,29 @@
+object Form6: TForm6
+  Left = 313
+  Height = 403
+  Top = 197
+  Width = 745
+  Caption = 'Cabinet - Command output'
+  ClientHeight = 403
+  ClientWidth = 745
+  LCLVersion = '3.6.0.0'
+  object OutputMemo: TMemo
+    Left = 0
+    Height = 370
+    Top = 0
+    Width = 743
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object UpdateButton: TButton
+    Left = 664
+    Height = 25
+    Top = 375
+    Width = 75
+    Anchors = [akTop, akRight, akBottom]
+    Caption = 'Update'
+    TabOrder = 1
+    OnClick = UpdateButtonClick
+  end
+end

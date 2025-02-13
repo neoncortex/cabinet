@@ -544,7 +544,9 @@ object Form4: TForm4
       Top = 32
       Width = 80
       Anchors = [akTop, akRight]
+      Enabled = False
       TabOrder = 4
+      Text = '0'
     end
     object DepthCheck: TCheckBox
       Left = 312
@@ -554,6 +556,7 @@ object Form4: TForm4
       Anchors = [akTop, akRight]
       Caption = 'Depth'
       TabOrder = 5
+      OnChange = DepthCheckChange
     end
   end
   object CacheBox: TGroupBox

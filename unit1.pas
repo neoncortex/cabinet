@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, FileCtrl,
   StdCtrls, Menus, ExtCtrls, AsyncProcess, StrUtils, FileUtil, RegExpr, Clipbrd,
-  Buttons, optionForm, recipes, tags, find, openFiles;
+  Buttons, optionForm, recipes, tags, find, openFiles, commandOutput;
 
 type
 
@@ -399,9 +399,13 @@ begin
     if box = 1 Then
     begin
       FileBox1.Directory := directoryName;
+      LeftPathEdit.Text := directoryName;
     end
     else
+    begin
       Filebox2.Directory := directoryName;
+      RightPathEdit.Text := directoryName;
+    end;
   end;
 end;
 
@@ -998,6 +1002,7 @@ procedure TForm1.CommandExecuteButtonClick(Sender: TObject);
 var
   selectionLeft: ansistring;
   selectionRight: ansistring;
+  commandLine: ansistring;
 begin
   selectionLeft := FileBox1.GetSelectedText;
   if selectionLeft = '' Then
@@ -1008,12 +1013,15 @@ begin
     selectionRight := 'noSelection';
 
   CommandMemo.Lines.SaveToFile(commandScript);
-  ASyncProcess1.CommandLine := 'bash'
+  commandLine := 'bash -c "bash'
     + ' "' + commandScript + '"'
     + ' "' + ExpandFileName(FileBox1.Directory) + '"'
     + ' "' + ExpandFileName(FileBox2.Directory) + '"'
     + ' "' + selectionLeft + '"'
-    + ' "' + selectionRight + '"';
+    + ' "' + selectionRight + '"'
+    + '"';
+
+  ASyncProcess1.CommandLine := commandLine;
   ASyncProcess1.Execute;
 end;
 

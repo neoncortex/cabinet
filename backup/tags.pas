@@ -102,6 +102,7 @@ type
     procedure DeleteFromClearButtonClick(Sender: TObject);
     procedure DeployButtonClick(Sender: TObject);
     procedure DeployClearButtonClick(Sender: TObject);
+    procedure DepthCheckChange(Sender: TObject);
     procedure OpenDirectoryButtonClick(Sender: TObject);
     procedure OpenLeftSearchMenuItemClick(Sender: TObject);
     procedure OpenRightSearchMenuItemClick(Sender: TObject);
@@ -583,6 +584,16 @@ end;
 procedure TForm4.DeployClearButtonClick(Sender: TObject);
 begin
   DeployMemo.Lines.Clear;
+end;
+
+procedure TForm4.DepthCheckChange(Sender: TObject);
+begin
+  if DepthCheck.Checked Then
+  begin
+    DepthEdit.Enabled := True;
+  end
+  else
+    DepthEdit.Enabled := False;
 end;
 
 // add

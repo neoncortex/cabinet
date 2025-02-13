@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, FileCtrl,
   StdCtrls, Menus, ExtCtrls, AsyncProcess, StrUtils, FileUtil, RegExpr, Clipbrd,
-  Buttons, optionForm, recipes, tags, find, openFiles;
+  Buttons, optionForm, recipes, tags, find, openFiles, commandOutput;
 
 type
 
@@ -159,7 +159,6 @@ type
       Shift: TShiftState);
     procedure ShowHiddenLeftMenuClick(Sender: TObject);
     procedure ShowHiddenRightMenuClick(Sender: TObject);
-    //procedure OpenFiles(box: integer; command: ansistring);
     function GetDirectoryName(box: integer): ansistring;
     procedure TagsMenuItemClick(Sender: TObject);
     function UnpackDirName(dirName: ansistring): ansistring;
@@ -351,56 +350,6 @@ procedure TForm1.LinkRightMenuItemClick(Sender: TObject);
 begin
   DynamicManipulateFiles(2, 'link');
 end;
-
-{
-procedure TForm1.OpenFiles(box: integer; command: ansistring);
-var
-  boxDir: ansistring;
-  commandLine: ansistring;
-  fileName: ansistring;
-  files: ansistring;
-  patternItem: array of ansistring;
-  regex: TRegExpr;
-  s: ansistring;
-  t: ansistring;
-begin
-  if box = 1 Then
-  begin
-    boxDir := FileBox1.Directory;
-    files := FileBox1.GetSelectedText;
-  end
-  else
-  begin
-    boxDir := FileBox2.Directory;
-    files := FileBox2.GetSelectedText;
-  end;
-
-  regex := TRegExpr.Create;
-  for s in SplitString(files, LineEnding) do
-  begin
-    fileName := ExpandFileName(boxDir + DirectorySeparator + s);
-    if FileExists(fileName) = True Then
-    begin
-      commandLine := StringReplace(command, '%s', fileName, [rfReplaceAll]);
-      for t in patterns do
-      begin
-        patternItem := SplitString(t, ' :::: ');
-        regex.Expression := patternItem[1];
-        if regex.exec(fileName) Then
-        begin
-          commandLine := StringReplace(patternItem[2], '%s', fileName, [rfReplaceAll]);
-          break;
-        end;
-      end;
-
-      ASyncProcess1.CommandLine := commandLine;
-      ASyncProcess1.Execute;
-    end;
-  end;
-
-  regex.Free;
-end;
-}
 
 function TForm1.UnpackDirName(dirName: ansistring): ansistring;
 begin
@@ -1049,6 +998,7 @@ procedure TForm1.CommandExecuteButtonClick(Sender: TObject);
 var
   selectionLeft: ansistring;
   selectionRight: ansistring;
+  commandLine: ansistring;
 begin
   selectionLeft := FileBox1.GetSelectedText;
   if selectionLeft = '' Then
@@ -1059,12 +1009,15 @@ begin
     selectionRight := 'noSelection';
 
   CommandMemo.Lines.SaveToFile(commandScript);
-  ASyncProcess1.CommandLine := 'bash'
+  commandLine := 'bash -c "bash'
     + ' "' + commandScript + '"'
     + ' "' + ExpandFileName(FileBox1.Directory) + '"'
     + ' "' + ExpandFileName(FileBox2.Directory) + '"'
     + ' "' + selectionLeft + '"'
-    + ' "' + selectionRight + '"';
+    + ' "' + selectionRight + '"'
+    + '"';
+
+  ASyncProcess1.CommandLine := commandLine;
   ASyncProcess1.Execute;
 end;
 
