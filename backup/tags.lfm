@@ -1,7 +1,7 @@
 object Form4: TForm4
   Left = 520
   Height = 627
-  Top = 48
+  Top = 32
   Width = 640
   Caption = 'Cabinet - Tags'
   ClientHeight = 627

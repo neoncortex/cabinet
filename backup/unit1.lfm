@@ -480,6 +480,10 @@ object Form1: TForm1
         Caption = 'Open'
         OnClick = OpenRightMenuClick
       end
+      object OpenWithRightMenuItem: TMenuItem
+        Caption = 'Open with'
+        OnClick = OpenWithRightMenuItemClick
+      end
       object EditRightMenu: TMenuItem
         Caption = 'Edit'
         OnClick = EditRightMenuClick

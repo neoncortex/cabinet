@@ -18,6 +18,7 @@ type
     CopyFilePathLeftMenuItem: TMenuItem;
     CopyFilePathRightMenuItem: TMenuItem;
     FindMenuItem: TMenuItem;
+    OpenWithRightMenuItem: TMenuItem;
     OpenWithLeftMenuItem: TMenuItem;
     TagsMenuItem: TMenuItem;
     RecipesMenuItem: TMenuItem;
@@ -153,6 +154,7 @@ type
     procedure OpenRightButtonClick(Sender: TObject);
     procedure OpenRightMenuClick(Sender: TObject);
     procedure OpenWithLeftMenuItemClick(Sender: TObject);
+    procedure OpenWithRightMenuItemClick(Sender: TObject);
     procedure PreferencesMenuItemClick(Sender: TObject);
     procedure RecipesButtonClick(Sender: TObject);
     procedure RecipesMenuItemClick(Sender: TObject);
@@ -920,6 +922,11 @@ end;
 procedure TForm1.OpenWithLeftMenuItemClick(Sender: TObject);
 begin
   OpenWith(FileBox1, processList);
+end;
+
+procedure TForm1.OpenWithRightMenuItemClick(Sender: TObject);
+begin
+  OpenWith(FileBox2, processList);
 end;
 
 procedure TForm1.PreferencesMenuItemClick(Sender: TObject);

@@ -82,8 +82,8 @@
         <UnitName Value="openFiles"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="86"/>
-        <CursorPos X="34" Y="101"/>
+        <TopLine Value="88"/>
+        <CursorPos X="32" Y="107"/>
         <UsageCount Value="64"/>
         <Loaded Value="True"/>
       </Unit>

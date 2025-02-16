@@ -535,11 +535,13 @@ end;
 procedure TForm4.OpenLeftSearchMenuItemClick(Sender: TObject);
 begin
   FileBox1.Directory := SearchTagResultList.GetSelectedText;
+  LeftPathEdit.Text := SearchTagResultList.GetSelectedText;
 end;
 
 procedure TForm4.OpenRightSearchMenuItemClick(Sender: TObject);
 begin
   FileBox2.Directory := SearchTagResultList.GetSelectedText;
+  RightPathEdit.Text := SearchTagResultList.GetSelectedText;
 end;
 
 // command
