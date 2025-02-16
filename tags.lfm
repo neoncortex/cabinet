@@ -1,7 +1,7 @@
 object Form4: TForm4
   Left = 520
   Height = 627
-  Top = 48
+  Top = 32
   Width = 640
   Caption = 'Cabinet - Tags'
   ClientHeight = 627
@@ -635,7 +635,7 @@ object Form4: TForm4
   end
   object AsyncProcess1: TAsyncProcess
     Active = False
-    Options = []
+    Options = [poDetached]
     Priority = ppNormal
     StartupOptions = []
     ShowWindow = swoNone

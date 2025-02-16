@@ -145,6 +145,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="openFiles"/>
       </Unit>
+      <Unit>
+        <Filename Value="processmanager.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="processManager"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, RegExpr, Clipbrd,
-  FileCtrl, OpenFiles;
+  FileCtrl, OpenFiles, processManager;
 
 type
 
@@ -50,6 +50,7 @@ type
     procedure SetRightPathEdit(edit: TEdit);
     procedure SetPatterns(list: TStringList);
     procedure SetFileCommand(command: ansistring);
+    procedure SetProcessList(list: TList);
   private
 
   public
@@ -64,6 +65,7 @@ var
   RightPathEdit: TEdit;
   fileCommand: ansistring;
   patterns: TStringList;
+  processList: TList;
 implementation
 
 {$R *.lfm}
@@ -105,6 +107,11 @@ end;
 procedure TForm5.SetPatterns(list: TStringList);
 begin
   patterns := list;
+end;
+
+procedure TForm5.SetProcessList(list: TList);
+begin
+  processList := list;
 end;
 
 function TForm5.contentMatch(fileName: ansistring): TStringList;
@@ -245,7 +252,7 @@ end;
 
 procedure TForm5.OpenButtonClick(Sender: TObject);
 begin
-  OpenListFiles(ResultList, fileCommand, patterns);
+  OpenListFiles(ResultList, fileCommand, patterns, processList);
 end;
 
 procedure TForm5.OpenLeftButtonClick(Sender: TObject);

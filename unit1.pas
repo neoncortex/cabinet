@@ -6,22 +6,24 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, FileCtrl,
-  StdCtrls, Menus, ExtCtrls, AsyncProcess, StrUtils, FileUtil, RegExpr, Clipbrd,
-  Buttons, optionForm, recipes, tags, find, openFiles;
+  StdCtrls, Menus, ExtCtrls, StrUtils, FileUtil, RegExpr, Clipbrd,
+  Buttons, optionForm, recipes, tags, find, openFiles, processManager;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    AsyncProcess1: TAsyncProcess;
     CommandStopButton: TButton;
     CopyFilePathLeftMenuItem: TMenuItem;
     CopyFilePathRightMenuItem: TMenuItem;
     FindMenuItem: TMenuItem;
+    OpenWithRightMenuItem: TMenuItem;
+    OpenWithLeftMenuItem: TMenuItem;
     TagsMenuItem: TMenuItem;
     RecipesMenuItem: TMenuItem;
     Separator9: TMenuItem;
+    commandFreeTimer: TTimer;
     ToolsMenuItem: TMenuItem;
     RecipesButton: TButton;
     RightFilterCheck: TCheckBox;
@@ -98,9 +100,9 @@ type
     FileMenuQuit: TMenuItem;
     MainSplitter: TSplitter;
     ViewMenuLeft: TMenuItem;
+    procedure CommandStopButtonClick(Sender: TObject);
     procedure CommandClearButtonClick(Sender: TObject);
     procedure CommandExecuteButtonClick(Sender: TObject);
-    procedure CommandStopButtonClick(Sender: TObject);
     procedure CopyFilePathLeftMenuItemClick(Sender: TObject);
     procedure CopyFilePathRightMenuItemClick(Sender: TObject);
     procedure CopyLeftMenuItemClick(Sender: TObject);
@@ -151,6 +153,8 @@ type
     procedure OpenLeftMenuClick(Sender: TObject);
     procedure OpenRightButtonClick(Sender: TObject);
     procedure OpenRightMenuClick(Sender: TObject);
+    procedure OpenWithLeftMenuItemClick(Sender: TObject);
+    procedure OpenWithRightMenuItemClick(Sender: TObject);
     procedure PreferencesMenuItemClick(Sender: TObject);
     procedure RecipesButtonClick(Sender: TObject);
     procedure RecipesMenuItemClick(Sender: TObject);
@@ -163,6 +167,7 @@ type
     procedure ShowHiddenRightMenuClick(Sender: TObject);
     function GetDirectoryName(box: integer): ansistring;
     procedure TagsMenuItemClick(Sender: TObject);
+    procedure commandFreeTimerTimer(Sender: TObject);
     function UnpackDirName(dirName: ansistring): ansistring;
     procedure OpenDirectories(box: integer);
     procedure DeleteFiles(box: integer);
@@ -198,6 +203,8 @@ var
   homeDir: ansistring;
   FileBox1ShowHidden: Boolean;
   FileBox2ShowHidden: Boolean;
+  processList: TList;
+  commandList: TList;
 
 implementation
 
@@ -222,6 +229,8 @@ begin
 
   LeftPathEdit.Text := ExpandFileName(FileBox1.Directory);
   RightPathEdit.Text := ExpandFileName(FileBox2.Directory);
+
+  // files
   cabinetDirectory := homeDir + directorySeparator + '.cabinet';
   recipesDir := cabinetDirectory + directorySeparator + 'recipes';
   configFile := cabinetDirectory + directorySeparator + 'config.cfg';
@@ -230,6 +239,12 @@ begin
   fileCommand := 'xdg-open "%s"';
   terminalEmulator := 'xterm';
   patterns := TStringList.Create;
+
+  // external processes
+  processList := TList.Create;
+  commandList := TList.Create;
+  commandFreeTimer.Enabled := True;
+
   if not DirectoryExists(cabinetDirectory) Then
     CreateDir(cabinetDirectory);
 
@@ -391,6 +406,12 @@ begin
   Form4.Show;
 end;
 
+procedure TForm1.commandFreeTimerTimer(Sender: TObject);
+begin
+  processFree(processList);
+  processFree(commandList);
+end;
+
 procedure TForm1.OpenDirectories(box: integer);
 var
   directoryName: ansistring;
@@ -454,6 +475,7 @@ end;
 
 procedure TForm1.DynamicManipulateFiles(box: integer; what: ansistring);
 var
+  commandLine: ansistring;
   dialogRes: boolean;
   directoryName: ansistring;
   directoryNewPath: ansistring;
@@ -521,12 +543,12 @@ begin
 
         if what = 'link' Then
         begin
-          ASyncProcess1.CommandLine := 'bash -c'
+          commandLine := 'bash -c'
             + ' "' + 'ln -s'
             + ' "' + directoryPath + '"'
             + ' "' + newName + '"'
             + '"';
-          AsyncProcess1.Execute;
+          processExecute(commandLine, processList);
         end;
       end
       else
@@ -546,12 +568,12 @@ begin
 
         if what = 'link' Then
         begin
-          ASyncProcess1.CommandLine := 'bash -c'
+          commandLine := 'bash -c'
             + ' "' + 'ln -s'
             + ' "' + fileName + '"'
             + ' "' + newName + '"'
             + '"';
-          AsyncProcess1.Execute;
+          processExecute(commandLine, processList);
         end;
       end;
     end;
@@ -595,7 +617,7 @@ begin
   end
   else
   begin
-    OpenBoxFiles(boxList, fileCommand, patterns);
+    OpenBoxFiles(boxList, fileCommand, patterns, processList);
   end;
 
   if not keep.Checked Then
@@ -668,6 +690,7 @@ begin
   Form5.SetRightPathEdit(RightPathEdit);
   Form5.SetFileCommand(fileCommand);
   Form5.SetPatterns(patterns);
+  Form5.SetProcessList(processList);
   Form5.Show;
 end;
 
@@ -832,19 +855,23 @@ begin
 end;
 
 procedure TForm1.TerminalLeftMenuItemClick(Sender: TObject);
+var
+  commandLine: ansistring;
 begin
-  ASyncProcess1.CommandLine := 'bash -c "cd "'
+  commandLine := 'bash -c "cd "'
     + FileBox1.Directory + '";'
     + terminalEmulator + '"';
-  ASyncProcess1.Execute;
+  processExecute(commandLine, processList);
 end;
 
 procedure TForm1.TerminalRightMenuItemClick(Sender: TObject);
+var
+  commandLine: ansistring;
 begin
-  ASyncProcess1.CommandLine := 'bash -c "cd "'
+  commandLine := 'bash -c "cd "'
     + FileBox2.Directory + '";'
     + terminalEmulator + '"';
-  ASyncProcess1.Execute;
+  processExecute(commandLine, processList);
 end;
 
 procedure TForm1.UpdateLeftMenuClick(Sender: TObject);
@@ -874,22 +901,32 @@ end;
 
 procedure TForm1.OpenLeftButtonClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox1, fileCommand, patterns);
+  OpenBoxFiles(FileBox1, fileCommand, patterns, processList);
 end;
 
 procedure TForm1.OpenLeftMenuClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox1, fileCommand, patterns);
+  OpenBoxFiles(FileBox1, fileCommand, patterns, processList);
 end;
 
 procedure TForm1.OpenRightButtonClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox2, fileCommand, patterns);
+  OpenBoxFiles(FileBox2, fileCommand, patterns, processList);
 end;
 
 procedure TForm1.OpenRightMenuClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox2, fileCommand, patterns);
+  OpenBoxFiles(FileBox2, fileCommand, patterns, processList);
+end;
+
+procedure TForm1.OpenWithLeftMenuItemClick(Sender: TObject);
+begin
+  OpenWith(FileBox1, processList);
+end;
+
+procedure TForm1.OpenWithRightMenuItemClick(Sender: TObject);
+begin
+  OpenWith(FileBox2, processList);
 end;
 
 procedure TForm1.PreferencesMenuItemClick(Sender: TObject);
@@ -1023,13 +1060,12 @@ begin
     + ' "' + selectionLeft + '"'
     + ' "' + selectionRight + '"';
 
-  ASyncProcess1.CommandLine := commandLine;
-  ASyncProcess1.Execute;
+  processExecute(commandLine, CommandList);
 end;
 
 procedure TForm1.CommandStopButtonClick(Sender: TObject);
 begin
-  ASyncProcess1.Terminate(1);
+  processTerminateAll(commandList);
 end;
 
 procedure TForm1.CopyFilePath(box: TFileListBox);
@@ -1123,22 +1159,22 @@ end;
 
 procedure TForm1.EditLeftButtonClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox1, defaultEditor, patterns);
+  OpenBoxFiles(FileBox1, defaultEditor, patterns, processList);
 end;
 
 procedure TForm1.EditLeftMenuClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox1, defaultEditor, patterns);
+  OpenBoxFiles(FileBox1, defaultEditor, patterns, processList);
 end;
 
 procedure TForm1.EditRightButtonClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox2, defaultEditor, patterns);
+  OpenBoxFiles(FileBox2, defaultEditor, patterns, processList);
 end;
 
 procedure TForm1.EditRightMenuClick(Sender: TObject);
 begin
-  OpenBoxFiles(FileBox2, defaultEditor, patterns);
+  OpenBoxFiles(FileBox2, defaultEditor, patterns, processList);
 end;
 
 

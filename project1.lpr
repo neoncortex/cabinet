@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, unit1, optionForm, recipes, tags, find, openFiles;
+  Forms, unit1, optionForm, recipes, tags, find, openFiles, processManager;
 
 {$R *.res}
 

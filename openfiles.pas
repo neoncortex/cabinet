@@ -5,21 +5,22 @@ unit openFiles;
 interface
 
 uses
-  Classes, SysUtils, RegExpr, AsyncProcess, FileCtrl, StrUtils, StdCtrls;
+  Classes, SysUtils, RegExpr, Process, AsyncProcess, FileCtrl, StrUtils, StdCtrls,
+  processManager, Dialogs;
 
-  procedure OpenBoxFiles(box: TFileListBox; command: ansistring; patterns: TStringList);
-  procedure OpenListFiles(list: TListBox; command: ansistring; patterns: TStringList);
+  procedure OpenBoxFiles(box: TFileListBox; command: ansistring; patterns: TStringList; processList: TList);
+  procedure OpenListFiles(list: TListBox; command: ansistring; patterns: TStringList; processList: TList);
+  procedure OpenWith(box: TFileListBox; processList: TList);
 
 implementation
 
-procedure OpenBoxFiles(box: TFileListBox; command: ansistring; patterns: TStringList);
+procedure OpenBoxFiles(box: TFileListBox; command: ansistring; patterns: TStringList; processList: TList);
 var
   boxDir: ansistring;
   commandLine: ansistring;
   fileName: ansistring;
   files: ansistring;
   patternItem: array of ansistring;
-  process: TASyncProcess;
   regex: TRegExpr;
   s: ansistring;
   t: ansistring;
@@ -30,7 +31,7 @@ begin
   for s in SplitString(files, LineEnding) do
   begin
     fileName := ExpandFileName(boxDir + DirectorySeparator + s);
-    if FileExists(fileName) = True Then
+    if FileExists(fileName) Then
     begin
       commandLine := StringReplace(command, '%s', fileName, [rfReplaceAll]);
       for t in patterns do
@@ -44,24 +45,19 @@ begin
         end;
       end;
 
-      process := TASyncProcess.Create(nil);
-      process.CommandLine := commandLine;
-      process.Execute;
-      process.Free;
+      processExecute(commandLine, processList);
     end;
   end;
 
   regex.Free;
 end;
 
-procedure OpenListFiles(list: TListBox; command: ansistring; patterns: TStringList);
+procedure OpenListFiles(list: TListBox; command: ansistring; patterns: TStringList; processList: TList);
 var
-  boxDir: ansistring;
   commandLine: ansistring;
   fileName: ansistring;
   files: ansistring;
   patternItem: array of ansistring;
-  process: TASyncProcess;
   regex: TRegExpr;
   s: ansistring;
   t: ansistring;
@@ -71,7 +67,7 @@ begin
   for s in SplitString(files, LineEnding) do
   begin
     fileName := ExpandFileName(s);
-    if FileExists(fileName) = True Then
+    if FileExists(fileName) Then
     begin
       commandLine := StringReplace(command, '%s', fileName, [rfReplaceAll]);
       for t in patterns do
@@ -85,14 +81,35 @@ begin
         end;
       end;
 
-      process := TASyncProcess.Create(nil);
-      process.CommandLine := commandLine;
-      process.Execute;
-      process.Free;
+      processExecute(commandLine, processList);
     end;
   end;
 
   regex.Free;
+end;
+
+procedure OpenWith(box: TFileListBox; processList: TList);
+var
+  command: ansistring;
+  commandLine: ansistring;
+  files: ansistring;
+  fileName: ansistring;
+  s: ansistring;
+begin
+  if InputQuery('Cabinet - Open with', 'Type the command, use %s for the file name', False, command) Then
+  begin
+    files := box.GetSelectedText;
+    for s in SplitString(files, LineEnding) do
+    begin
+      fileName := ExpandFileName(box.Directory + DirectorySeparator + s);
+      if FileExists(fileName) Then
+      begin
+        commandLine := command;
+        commandLine := StringReplace(commandLine, '%s', fileName, [rfReplaceAll]);
+        processExecute(commandLine, processList)
+      end;
+    end;
+  end;
 end;
 
 end.
