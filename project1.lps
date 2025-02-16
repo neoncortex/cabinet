@@ -57,7 +57,6 @@
         <ComponentName Value="Form4"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="529"/>
         <CursorPos X="3" Y="543"/>
@@ -73,7 +72,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="7"/>
         <CursorPos X="63" Y="255"/>
-        <UsageCount Value="99"/>
+        <UsageCount Value="103"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -84,17 +83,18 @@
         <EditorIndex Value="1"/>
         <TopLine Value="88"/>
         <CursorPos X="32" Y="107"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="74"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="processmanager.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="processManager"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="3"/>
-        <CursorPos X="9" Y="64"/>
-        <UsageCount Value="38"/>
+        <TopLine Value="8"/>
+        <CursorPos X="28" Y="66"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>

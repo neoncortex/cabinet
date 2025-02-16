@@ -43,10 +43,17 @@ begin
     begin
       if process^.Running = False Then
       begin
-        setLength(itemsToDelete, length(itemsToDelete) + 1);
-        process^.WaitOnExit;
-        itemsToDelete[itemsToDeleteCounter] := counter;
-        itemsToDeleteCounter := itemsToDeleteCounter + 1;
+        try
+          setLength(itemsToDelete, length(itemsToDelete) + 1);
+          process^.WaitOnExit;
+          process^.Free;
+          itemsToDelete[itemsToDeleteCounter] := counter;
+          itemsToDeleteCounter := itemsToDeleteCounter + 1;
+        except
+          on E: Exception
+          do
+            writeln(E.ToString);
+        end;
       end;
 
       counter := counter + 1;
@@ -55,7 +62,13 @@ begin
 
   for counter in itemsToDelete do
   begin
-    list.Delete(counter);
+    try
+      list.Delete(counter);
+
+    except
+      on E: Exception do
+        writeln(E.ToString);
+    end;
   end;
 end;
 
@@ -72,6 +85,7 @@ begin
     if process <> nil Then
     begin
       process^.Terminate(1);
+      process^.Free;
     end;
   end;
 
