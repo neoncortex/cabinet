@@ -52,7 +52,7 @@ begin
         except
           on E: Exception
           do
-            writeln(E.ToString);
+            writeln('On processFree: ' + E.ToString);
         end;
       end;
 
@@ -60,14 +60,14 @@ begin
     end;
   end;
 
-  for counter in itemsToDelete do
+  for counter := length(itemsToDelete) downto 0 do
   begin
     try
-      list.Delete(counter);
-
+      if list[itemsToDelete[counter]] <> nil Then
+        list.Delete(itemsToDelete[counter]);
     except
       on E: Exception do
-        writeln(E.ToString);
+        writeln('On processFree: ' + E.ToString);
     end;
   end;
 end;
@@ -84,8 +84,13 @@ begin
     process := @item;
     if process <> nil Then
     begin
-      process^.Terminate(1);
-      process^.Free;
+      try
+        process^.Terminate(1);
+        process^.Free;
+      except
+        on E: Exception do
+          writeln('on processTerminateAll: ' + E.ToString);
+      end;
     end;
   end;
 

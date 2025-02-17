@@ -408,6 +408,7 @@ end;
 
 procedure TForm1.commandFreeTimerTimer(Sender: TObject);
 begin
+  writeln(commandList.Count);
   processFree(processList);
   processFree(commandList);
 end;
