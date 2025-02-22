@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, RegExpr, Clipbrd,
-  FileCtrl, OpenFiles, ASyncProcess;
+  FileCtrl, OpenFiles, processManager;
 
 type
 
@@ -50,7 +50,11 @@ type
     procedure SetRightPathEdit(edit: TEdit);
     procedure SetPatterns(list: TStringList);
     procedure SetFileCommand(command: ansistring);
-    procedure SetProcess(p: TASyncProcess);
+    procedure SetProcessList(list: TList);
+    procedure SetForeground(colorData: TColor);
+    procedure SetFont(fontName: ansistring);
+    procedure SetFontSize(fontSize: integer);
+
   private
 
   public
@@ -65,7 +69,7 @@ var
   RightPathEdit: TEdit;
   fileCommand: ansistring;
   patterns: TStringList;
-  process: TASyncProcess;
+  processList: TList;
 implementation
 
 {$R *.lfm}
@@ -109,9 +113,25 @@ begin
   patterns := list;
 end;
 
-procedure TForm5.SetProcess(p: TASyncProcess);
+procedure TForm5.SetProcessList(list: TList);
 begin
-  process := p;
+  processList := list;
+end;
+
+// appearance
+procedure TForm5.SetForeground(colorData: TColor);
+begin
+  resultList.Font.Color := colorData;
+end;
+
+procedure TForm5.SetFont(fontName: ansistring);
+begin
+  resultList.Font.Name := fontName;
+end;
+
+procedure TForm5.SetFontSize(fontSize: integer);
+begin
+  resultList.Font.Size := fontSize;
 end;
 
 function TForm5.contentMatch(fileName: ansistring): TStringList;
@@ -252,7 +272,7 @@ end;
 
 procedure TForm5.OpenButtonClick(Sender: TObject);
 begin
-  OpenListFiles(ResultList, fileCommand, patterns, process);
+  OpenListFiles(ResultList, fileCommand, patterns, processList);
 end;
 
 procedure TForm5.OpenLeftButtonClick(Sender: TObject);

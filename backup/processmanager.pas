@@ -19,7 +19,7 @@ var
 begin
   process := TASyncProcess.Create(nil);
   process.CommandLine := commandLine;
-  process.Options := process.Options + [poUsePipes];
+  process.Options := process.Options + [poUsePipes, poDetached];
   list.Add(process);
   process.Execute;
 end;
@@ -60,7 +60,7 @@ begin
     end;
   end;
 
-  for counter := length(itemsToDelete) downto 0 do
+  for counter := length(itemsToDelete) - 1 downto 0 do
   begin
     try
       if list[itemsToDelete[counter]] <> nil Then

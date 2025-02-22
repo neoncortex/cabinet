@@ -226,19 +226,19 @@ object Form1: TForm1
         OnClick = FilterRightButtonClick
       end
       object FilterRightEdit: TEdit
-        Left = 64
+        Left = 72
         Height = 31
         Top = 40
-        Width = 264
+        Width = 256
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 6
         OnKeyDown = FilterRightEditKeyDown
       end
       object RightPathEdit: TEdit
-        Left = 0
+        Left = 8
         Height = 31
         Top = 8
-        Width = 328
+        Width = 320
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 7
         OnKeyDown = RightPathEditKeyDown
@@ -254,7 +254,7 @@ object Form1: TForm1
         OnClick = RightPathButtonClick
       end
       object RightFilterCheck: TCheckBox
-        Left = 0
+        Left = 8
         Height = 23
         Top = 42
         Width = 58

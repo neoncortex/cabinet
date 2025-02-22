@@ -1,30 +1,30 @@
 object Form2: TForm2
-  Left = 541
-  Height = 470
-  Top = 166
-  Width = 650
+  Left = 666
+  Height = 477
+  Top = 144
+  Width = 652
   Caption = 'Cabinet options'
-  ClientHeight = 470
-  ClientWidth = 650
+  ClientHeight = 477
+  ClientWidth = 652
   LCLVersion = '3.6.0.0'
   object PageControl1: TPageControl
     Left = 0
-    Height = 428
+    Height = 435
     Top = 0
-    Width = 650
-    ActivePage = ExternalCommandsTab
+    Width = 652
+    ActivePage = AppearanceTab
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     object ExternalCommandsTab: TTabSheet
       Caption = 'External commands'
-      ClientHeight = 395
-      ClientWidth = 640
+      ClientHeight = 402
+      ClientWidth = 642
       object FileCommandEdit: TEdit
         Left = 0
         Height = 31
         Top = 40
-        Width = 637
+        Width = 639
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 0
       end
@@ -39,7 +39,7 @@ object Form2: TForm2
         Left = 0
         Height = 31
         Top = 104
-        Width = 637
+        Width = 639
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 1
       end
@@ -54,7 +54,7 @@ object Form2: TForm2
         Left = 0
         Height = 31
         Top = 168
-        Width = 637
+        Width = 639
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 2
       end
@@ -68,23 +68,23 @@ object Form2: TForm2
     end
     object FileCommandsTab: TTabSheet
       Caption = 'File commands'
-      ClientHeight = 395
-      ClientWidth = 640
+      ClientHeight = 402
+      ClientWidth = 642
       object FileCommandSetupBox: TGroupBox
         Left = 0
-        Height = 184
+        Height = 191
         Top = 8
-        Width = 641
+        Width = 643
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Set pattern'
-        ClientHeight = 164
-        ClientWidth = 639
+        ClientHeight = 189
+        ClientWidth = 641
         TabOrder = 0
         object FileCommandRegexEntry: TEdit
           Left = 8
           Height = 31
           Top = 24
-          Width = 624
+          Width = 626
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 0
         end
@@ -106,7 +106,7 @@ object Form2: TForm2
           Left = 8
           Height = 31
           Top = 96
-          Width = 624
+          Width = 626
           Anchors = [akTop, akLeft, akRight]
           TabOrder = 1
         end
@@ -131,19 +131,19 @@ object Form2: TForm2
       end
       object FileCommandPatternsBox: TGroupBox
         Left = 0
-        Height = 200
+        Height = 207
         Top = 192
-        Width = 641
+        Width = 643
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Patterns'
-        ClientHeight = 180
-        ClientWidth = 639
+        ClientHeight = 187
+        ClientWidth = 641
         TabOrder = 1
         object FileCommandList: TListBox
           Left = 8
-          Height = 184
+          Height = 191
           Top = 0
-          Width = 624
+          Width = 626
           Anchors = [akTop, akLeft, akRight, akBottom]
           ItemHeight = 0
           TabOrder = 0
@@ -152,11 +152,578 @@ object Form2: TForm2
         end
       end
     end
+    object AppearanceTab: TTabSheet
+      Caption = 'Appearance'
+      ClientHeight = 402
+      ClientWidth = 642
+      object AppearanceTabs: TPageControl
+        Left = 8
+        Height = 400
+        Top = 0
+        Width = 632
+        ActivePage = AppearanceRecipesTab
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        TabIndex = 3
+        TabOrder = 0
+        object ManagerTab: TTabSheet
+          Caption = 'Manager'
+          ClientHeight = 367
+          ClientWidth = 622
+          object AppearancePanesBox: TGroupBox
+            Left = 0
+            Height = 224
+            Top = 8
+            Width = 616
+            Caption = 'Panes'
+            ClientHeight = 204
+            ClientWidth = 614
+            TabOrder = 0
+            object AppearanceLeftBox: TGroupBox
+              Left = 8
+              Height = 96
+              Top = 0
+              Width = 600
+              Caption = 'Left'
+              ClientHeight = 76
+              ClientWidth = 598
+              TabOrder = 0
+              object LeftForegroundColorButton: TColorButton
+                Left = 8
+                Height = 25
+                Top = 0
+                Width = 120
+                BorderWidth = 2
+                ButtonColorSize = 16
+                ButtonColor = clBlack
+                Caption = 'Foreground'
+              end
+              object useLeftForegroundColorCheck: TCheckBox
+                Left = 144
+                Height = 23
+                Top = 0
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 0
+              end
+              object leftFontEdit: TEdit
+                Left = 8
+                Height = 31
+                Top = 32
+                Width = 424
+                TabOrder = 1
+              end
+              object leftFontSelectButton: TButton
+                Left = 448
+                Height = 25
+                Top = 38
+                Width = 75
+                Caption = 'Select'
+                TabOrder = 2
+                OnClick = leftFontSelectButtonClick
+              end
+              object UseLeftFontCheck: TCheckBox
+                Left = 536
+                Height = 23
+                Top = 40
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 3
+              end
+            end
+            object AppearanceRightBox: TGroupBox
+              Left = 8
+              Height = 97
+              Top = 96
+              Width = 600
+              Caption = 'Right'
+              ClientHeight = 77
+              ClientWidth = 598
+              TabOrder = 1
+              object rightForegroundColorButton: TColorButton
+                Left = 8
+                Height = 25
+                Top = 0
+                Width = 120
+                BorderWidth = 2
+                ButtonColorSize = 16
+                ButtonColor = clBlack
+                Caption = 'Foreground'
+              end
+              object useRightForegroundColorCheck: TCheckBox
+                Left = 144
+                Height = 23
+                Top = 1
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 0
+              end
+              object rightFontEdit: TEdit
+                Left = 8
+                Height = 31
+                Top = 32
+                Width = 424
+                TabOrder = 1
+              end
+              object rightFontSelectButton: TButton
+                Left = 448
+                Height = 25
+                Top = 38
+                Width = 75
+                Caption = 'Select'
+                TabOrder = 2
+                OnClick = rightFontSelectButtonClick
+              end
+              object useRightFontCheck: TCheckBox
+                Left = 536
+                Height = 23
+                Top = 40
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 3
+              end
+            end
+          end
+          object AppearanceCommandBox: TGroupBox
+            Left = 0
+            Height = 105
+            Top = 232
+            Width = 616
+            Caption = 'Command'
+            ClientHeight = 85
+            ClientWidth = 614
+            TabOrder = 1
+            object commandForegroundColorButton: TColorButton
+              Left = 16
+              Height = 25
+              Top = 8
+              Width = 120
+              BorderWidth = 2
+              ButtonColorSize = 16
+              ButtonColor = clBlack
+              Caption = 'Foreground'
+            end
+            object commandBackgroundColorButton: TColorButton
+              Left = 216
+              Height = 25
+              Top = 10
+              Width = 120
+              BorderWidth = 2
+              ButtonColorSize = 16
+              ButtonColor = clBlack
+              Caption = 'Background'
+            end
+            object useForegroundCommandCheck: TCheckBox
+              Left = 152
+              Height = 23
+              Top = 10
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 0
+            end
+            object useBackgroundCommandCheck: TCheckBox
+              Left = 352
+              Height = 23
+              Top = 12
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 1
+            end
+            object commandFontEdit: TEdit
+              Left = 16
+              Height = 31
+              Top = 40
+              Width = 424
+              TabOrder = 2
+            end
+            object selectCommandFontButton: TButton
+              Left = 456
+              Height = 25
+              Top = 46
+              Width = 75
+              Caption = 'Select'
+              TabOrder = 3
+              OnClick = selectCommandFontButtonClick
+            end
+            object useCommandFontCheck: TCheckBox
+              Left = 544
+              Height = 23
+              Top = 48
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 4
+            end
+          end
+        end
+        object AppearanceFindTab: TTabSheet
+          Caption = 'Find'
+          ClientHeight = 367
+          ClientWidth = 622
+          object findForegroundColorButton: TColorButton
+            Left = 8
+            Height = 25
+            Top = 16
+            Width = 120
+            BorderWidth = 2
+            ButtonColorSize = 16
+            ButtonColor = clBlack
+            Caption = 'Foreground'
+          end
+          object useFindForegroundColorCheck: TCheckBox
+            Left = 144
+            Height = 23
+            Top = 18
+            Width = 50
+            Caption = 'Use'
+            TabOrder = 0
+          end
+          object findFontEdit: TEdit
+            Left = 8
+            Height = 31
+            Top = 48
+            Width = 424
+            TabOrder = 1
+          end
+          object selectFontFindButton: TButton
+            Left = 448
+            Height = 25
+            Top = 54
+            Width = 75
+            Caption = 'Select'
+            TabOrder = 2
+            OnClick = selectFontFindButtonClick
+          end
+          object useFindFontCheck: TCheckBox
+            Left = 539
+            Height = 23
+            Top = 56
+            Width = 50
+            Caption = 'Use'
+            TabOrder = 3
+          end
+        end
+        object AppearanceTagsTab: TTabSheet
+          Caption = 'Tags'
+          ClientHeight = 367
+          ClientWidth = 622
+          object ApparearanceCacheBox: TGroupBox
+            Left = 8
+            Height = 104
+            Top = 8
+            Width = 608
+            Caption = 'Cache'
+            ClientHeight = 84
+            ClientWidth = 606
+            TabOrder = 0
+            object cacheForegroundColorButton: TColorButton
+              Left = 16
+              Height = 25
+              Top = 4
+              Width = 120
+              BorderWidth = 2
+              ButtonColorSize = 16
+              ButtonColor = clBlack
+              Caption = 'Foreground'
+            end
+            object useCacheForegroundColorCheck: TCheckBox
+              Left = 152
+              Height = 23
+              Top = 6
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 0
+            end
+            object cacheFontEdit: TEdit
+              Left = 16
+              Height = 31
+              Top = 40
+              Width = 424
+              TabOrder = 1
+            end
+            object cacheSelectFontButton: TButton
+              Left = 456
+              Height = 25
+              Top = 46
+              Width = 75
+              Caption = 'Select'
+              TabOrder = 2
+              OnClick = cacheSelectFontButtonClick
+            end
+            object useCacheFontCheck: TCheckBox
+              Left = 544
+              Height = 23
+              Top = 46
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 3
+            end
+          end
+          object AppareanceTagControlsGroup: TGroupBox
+            Left = 8
+            Height = 241
+            Top = 120
+            Width = 608
+            Caption = 'Tag controls'
+            ClientHeight = 221
+            ClientWidth = 606
+            TabOrder = 1
+            object AppearanceSearchBox: TGroupBox
+              Left = 8
+              Height = 98
+              Top = 8
+              Width = 592
+              Caption = 'Search'
+              ClientHeight = 78
+              ClientWidth = 590
+              TabOrder = 0
+              object tagSearchForegroundColorButton: TColorButton
+                Left = 8
+                Height = 25
+                Top = 8
+                Width = 123
+                BorderWidth = 2
+                ButtonColorSize = 16
+                ButtonColor = clBlack
+                Caption = 'Foreground'
+              end
+              object searchFontEdit: TEdit
+                Left = 8
+                Height = 31
+                Top = 40
+                Width = 424
+                TabOrder = 0
+              end
+              object searchSelectFontButton: TButton
+                Left = 448
+                Height = 25
+                Top = 46
+                Width = 75
+                Caption = 'Select'
+                TabOrder = 1
+                OnClick = searchSelectFontButtonClick
+              end
+              object useSearchForegroundColorCheck: TCheckBox
+                Left = 144
+                Height = 23
+                Top = 10
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 2
+              end
+              object useSearchFontCheck: TCheckBox
+                Left = 536
+                Height = 23
+                Top = 48
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 3
+              end
+            end
+            object AppearanceSearchContentGroupBox: TGroupBox
+              Left = 8
+              Height = 105
+              Top = 112
+              Width = 592
+              Caption = 'Content'
+              ClientHeight = 85
+              ClientWidth = 590
+              TabOrder = 1
+              object contentForegroundColorButton: TColorButton
+                Left = 8
+                Height = 25
+                Top = 8
+                Width = 123
+                BorderWidth = 2
+                ButtonColorSize = 16
+                ButtonColor = clBlack
+                Caption = 'Foreground'
+              end
+              object useContentForegroundColorCheck: TCheckBox
+                Left = 144
+                Height = 23
+                Top = 10
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 0
+              end
+              object contentBackgroundColorButton: TColorButton
+                Left = 208
+                Height = 25
+                Top = 8
+                Width = 120
+                BorderWidth = 2
+                ButtonColorSize = 16
+                ButtonColor = clBlack
+                Caption = 'Background'
+              end
+              object useContentBackgroundColorCheck: TCheckBox
+                Left = 344
+                Height = 23
+                Top = 10
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 1
+              end
+              object contentFontEdit: TEdit
+                Left = 8
+                Height = 31
+                Top = 40
+                Width = 424
+                TabOrder = 2
+              end
+              object selectContentFontButton: TButton
+                Left = 448
+                Height = 25
+                Top = 46
+                Width = 75
+                Caption = 'Select'
+                TabOrder = 3
+                OnClick = selectContentFontButtonClick
+              end
+              object useContentFontCheck: TCheckBox
+                Left = 536
+                Height = 23
+                Top = 48
+                Width = 50
+                Caption = 'Use'
+                TabOrder = 4
+              end
+            end
+          end
+        end
+        object AppearanceRecipesTab: TTabSheet
+          Caption = 'Recipes'
+          ClientHeight = 367
+          ClientWidth = 622
+          object AppearanceRecipesListGroup: TGroupBox
+            Left = 8
+            Height = 105
+            Top = 8
+            Width = 608
+            Caption = 'List'
+            ClientHeight = 85
+            ClientWidth = 606
+            TabOrder = 0
+            object foregroundRecipesColorButton: TColorButton
+              Left = 16
+              Height = 25
+              Top = 8
+              Width = 118
+              BorderWidth = 2
+              ButtonColorSize = 16
+              ButtonColor = clBlack
+              Caption = 'Foreground'
+            end
+            object useRecipesForegroundColorCheck: TCheckBox
+              Left = 152
+              Height = 23
+              Top = 10
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 0
+            end
+            object recipesListFontEdit: TEdit
+              Left = 16
+              Height = 31
+              Top = 40
+              Width = 424
+              TabOrder = 1
+            end
+            object selectFontRecipesButton: TButton
+              Left = 456
+              Height = 25
+              Top = 46
+              Width = 75
+              Caption = 'Select'
+              TabOrder = 2
+              OnClick = selectFontRecipesButtonClick
+            end
+            object useRecipesFontCheck: TCheckBox
+              Left = 544
+              Height = 23
+              Top = 46
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 3
+            end
+          end
+          object AppearanceRecipesBox: TGroupBox
+            Left = 8
+            Height = 105
+            Top = 120
+            Width = 608
+            Caption = 'Text'
+            ClientHeight = 85
+            ClientWidth = 606
+            TabOrder = 1
+            object foregroundRecipesTextColorButton: TColorButton
+              Left = 16
+              Height = 25
+              Top = 5
+              Width = 118
+              BorderWidth = 2
+              ButtonColorSize = 16
+              ButtonColor = clBlack
+              Caption = 'Foreground'
+            end
+            object backgroundRecipesTextColorButton: TColorButton
+              Left = 224
+              Height = 25
+              Top = 5
+              Width = 118
+              BorderWidth = 2
+              ButtonColorSize = 16
+              ButtonColor = clBlack
+              Caption = 'Background'
+            end
+            object useRecipesForegroundTextCheck: TCheckBox
+              Left = 152
+              Height = 23
+              Top = 7
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 0
+            end
+            object useRecipesBackgroundTextColorCheck: TCheckBox
+              Left = 360
+              Height = 23
+              Top = 5
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 1
+            end
+            object fontRecipesTextEdit: TEdit
+              Left = 16
+              Height = 31
+              Top = 40
+              Width = 424
+              TabOrder = 2
+            end
+            object selectFontRecipesTextButton: TButton
+              Left = 456
+              Height = 25
+              Top = 46
+              Width = 75
+              Caption = 'Select'
+              TabOrder = 3
+              OnClick = selectFontRecipesTextButtonClick
+            end
+            object useRecipesFontTextCheck: TCheckBox
+              Left = 544
+              Height = 23
+              Top = 48
+              Width = 50
+              Caption = 'Use'
+              TabOrder = 4
+            end
+          end
+        end
+      end
+    end
   end
   object SaveButton: TButton
-    Left = 573
+    Left = 575
     Height = 25
-    Top = 444
+    Top = 451
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Save'
@@ -164,13 +731,18 @@ object Form2: TForm2
     OnClick = SaveButtonClick
   end
   object ReloadButton: TButton
-    Left = 488
+    Left = 490
     Height = 25
-    Top = 444
+    Top = 451
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Reload'
     TabOrder = 2
     OnClick = ReloadButtonClick
+  end
+  object FontDialog1: TFontDialog
+    MinFontSize = 0
+    MaxFontSize = 0
+    Left = 520
   end
 end

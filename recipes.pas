@@ -36,6 +36,14 @@ type
     procedure UseRecipeButtonClick(Sender: TObject);
     procedure SetCommandMemo(commandMemoName: TMemo);
     procedure SetConfigDir(dirName: ansistring);
+    procedure SetListFont(fontName: ansistring);
+    procedure SetListFontSize(fontSize: integer);
+    procedure SetListForeground(colorData: TColor);
+    procedure SetTextFont(fontName: ansistring);
+    procedure SetTextFontSize(fontSize: integer);
+    procedure SetTextForeground(colorData: TColor);
+    procedure SetTextBackground(colorData: TColor);
+
   private
 
   public
@@ -65,6 +73,42 @@ begin
   recipesDir := configDir + directorySeparator + 'recipes';
   recipesFileBox.Directory := recipesDir;
   recipesFileBox.UpdateFileList;
+end;
+
+// appearance
+procedure TForm3.SetListFont(fontName: ansistring);
+begin
+  RecipesFileBox.Font.Name := fontName;
+end;
+
+procedure TForm3.SetListFontSize(fontSize: integer);
+begin
+  RecipesFileBox.Font.Size := fontSize;
+end;
+
+procedure TForm3.SetListForeground(colorData: TColor);
+begin
+  RecipesFileBox.Font.Color := colorData;
+end;
+
+procedure TForm3.SetTextFont(fontName: ansistring);
+begin
+  RecipesMemo.Font.Name := fontName;
+end;
+
+procedure TForm3.SetTextFontSize(fontSize: integer);
+begin
+  RecipesMemo.Font.Size := fontSize;
+end;
+
+procedure TForm3.SetTextForeground(colorData: TColor);
+begin
+  RecipesMemo.Font.Color := colorData;
+end;
+
+procedure TForm3.SetTextBackground(colorData: TColor);
+begin
+  RecipesMemo.Color := colorData;
 end;
 
 procedure TForm3.UseRecipeButtonClick(Sender: TObject);

@@ -131,6 +131,21 @@ type
     function SearchTag(tags: ansistring): TStringList;
     procedure SetConfigDir(dir: ansistring);
     procedure SetEditText(edit: TEdit; textString: ansistring);
+
+    procedure SetCacheListForeground(colorName: TColor);
+    procedure SetTagListForeground(colorName: TColor);
+    procedure SetSearchResultForeground(colorName: TColor);
+    procedure SetContentForeground(colorName: TColor);
+    procedure SetContentBackground(colorName: TColor);
+
+    procedure SetCacheListFont(fontName: ansistring);
+    procedure SetCacheListFontSize(fontSize: integer);
+    procedure SetTagListFont(fontName: ansistring);
+    procedure SetTagListFontSize(fontSize: integer);
+    procedure SetSearchResultFont(fontName: ansistring);
+    procedure SetSearchResultFontSize(fontSize: integer);
+    procedure SetContentFont(fontName: ansistring);
+    procedure SetContentFontSize(fontSize: integer);
   private
 
   public
@@ -182,6 +197,118 @@ end;
 procedure TForm4.SetRightPathEdit(pathEdit: TEdit);
 begin
   rightPathEdit := pathEdit;
+end;
+
+// colors
+
+// cache
+procedure TForm4.SetCacheListForeground(colorName: TColor);
+begin
+  CacheList.Font.Color := colorName;
+end;
+
+// search
+procedure TForm4.SetTagListForeground(colorName: TColor);
+begin
+  TagListBox.Font.Color := colorName;
+end;
+
+procedure TForm4.SetSearchResultForeground(colorName: TColor);
+begin
+  SearchTagResultList.Font.Color := colorName;
+end;
+
+
+// content
+procedure TForm4.SetContentForeground(colorName: TColor);
+begin
+  CommandMemo.Font.Color := colorName;
+  DeployMemo.Font.Color := colorName;
+  AddMemo.Font.Color := colorName;
+  AddToMemo.Font.Color := colorName;
+  DeleteMemo.Font.Color := colorName;
+  DeleteFromMemo.Font.Color := colorName;
+  SwapAddMemo.Font.Color := colorName;
+  SwapDeleteMemo.Font.Color := colorName;
+  SwapFromAddMemo.Font.Color := colorName;
+  SwapFromDeleteMemo.Font.Color := colorName;
+end;
+
+procedure TForm4.SetContentBackground(colorName: TColor);
+begin
+  CommandMemo.Color := colorName;
+  DeployMemo.Color := colorName;
+  AddMemo.Color := colorName;
+  AddToMemo.Color := colorName;
+  DeleteMemo.Color := colorName;
+  DeleteFromMemo.Color := colorName;
+  SwapAddMemo.Color := colorName;
+  SwapDeleteMemo.Color := colorName;
+  SwapFromAddMemo.Color := colorName;
+  SwapFromDeleteMemo.Color := colorName;
+end;
+
+// fonts
+
+// cache
+procedure TForm4.SetCacheListFont(fontName: ansistring);
+begin
+  CacheList.Font.Name := fontName;
+end;
+
+procedure TForm4.SetCacheListFontSize(fontSize: integer);
+begin
+  CacheList.Font.Size := fontSize;
+end;
+
+// search
+procedure TForm4.SetSearchResultFont(fontName: ansistring);
+begin
+  SearchTagResultList.Font.Name := fontName;
+end;
+
+procedure TForm4.SetTagListFont(fontName: ansistring);
+begin
+  TagListBox.Font.Name := fontName;
+end;
+
+procedure TForm4.SetSearchResultFontSize(fontSize: integer);
+begin
+  SearchTagResultList.Font.Size := fontSize;
+end;
+
+procedure TForm4.SetTagListFontSize(fontSize: integer);
+begin
+  TagListBox.Font.Size := fontSize;
+end;
+
+// content
+procedure TForm4.SetContentFont(fontName: ansistring);
+begin
+  CommandMemo.Font.Name := fontName;
+  DeployMemo.Font.Name := fontName;
+  AddMemo.Font.Name := fontName;
+  AddToMemo.Font.Name := fontName;
+  DeleteMemo.Font.Name := fontName;
+  DeleteFromMemo.Font.Name := fontName;
+  SwapAddMemo.Font.Name := fontName;
+  SwapDeleteMemo.Font.Name := fontName;
+  SwapFromAddMemo.Font.Name := fontName;
+  SwapFromDeleteMemo.Font.Name := fontName;
+end;
+
+procedure TForm4.SetContentFontSize(fontSize: integer);
+begin
+  CommandMemo.Font.Size := fontSize;
+  DeployMemo.Font.Size := fontSize;
+  AddMemo.Font.Size := fontSize;
+  AddToMemo.Font.Size := fontSize;
+  DeleteMemo.Font.Size := fontSize;
+  DeleteFromMemo.Font.Size := fontSize;
+  SwapAddMemo.Font.Size := fontSize;
+  SwapDeleteMemo.Font.Size := fontSize;
+  SwapFromAddMemo.Font.Size := fontSize;
+  SwapFromDeleteMemo.Font.Size := fontSize;
 end;
 
 // edit manipulation
@@ -535,11 +662,13 @@ end;
 procedure TForm4.OpenLeftSearchMenuItemClick(Sender: TObject);
 begin
   FileBox1.Directory := SearchTagResultList.GetSelectedText;
+  LeftPathEdit.Text := SearchTagResultList.GetSelectedText;
 end;
 
 procedure TForm4.OpenRightSearchMenuItemClick(Sender: TObject);
 begin
   FileBox2.Directory := SearchTagResultList.GetSelectedText;
+  RightPathEdit.Text := SearchTagResultList.GetSelectedText;
 end;
 
 // command

@@ -183,6 +183,7 @@ type
     procedure UpdateRightMenuClick(Sender: TObject);
     procedure CopyFilePath(box: TFileListBox);
     procedure ReadConfig;
+    procedure SetAppearance;
   private
 
   public
@@ -206,6 +207,46 @@ var
   processList: TList;
   commandList: TList;
 
+  // appearance
+  defaultLeftFont: ansistring;
+  defaultLeftFontSize: integer;
+  defaultLeftForeground: TColor;
+  defaultRightFont: ansistring;
+  defaultRightfontSize: integer;
+  defaultRightForeground: TColor;
+  defaultCommandFont: ansistring;
+  defaultCommandFontSize: integer;
+  defaultCommandBackground: TColor;
+  defaultCommandForeground: TColor;
+
+  // tag dialog appearance
+  tagCacheFont: ansistring;
+  tagCacheFontSize: integer;
+  tagCacheForegroundColor: TColor;
+  tagSearchTagListFont: ansistring;
+  tagSearchTagListFontSize: integer;
+  tagSearchTagListForegroundColor: TColor;
+  tagSearchResultFont: ansistring;
+  tagSearchResultFontSize: integer;
+  tagSearchResultForegroundColor: TColor;
+  tagContentFont: ansistring;
+  tagContentFontSize: integer;
+  tagContentBackgroundColor: TColor;
+  tagContentForegroundColor: TColor;
+
+  // find dialog appearance
+  findForeground: TColor;
+  findFont: ansistring;
+  findFontSize: integer;
+
+  // recipes dialog appearance
+  recipesListFont: ansistring;
+  recipesListFontSize: integer;
+  recipesListForeground: TColor;
+  recipesTextFont: ansistring;
+  recipesTextFontSize: integer;
+  recipesTextForeground: TColor;
+  recipesTextBackground: TColor;
 implementation
 
 {$R *.lfm}
@@ -229,6 +270,19 @@ begin
 
   LeftPathEdit.Text := ExpandFileName(FileBox1.Directory);
   RightPathEdit.Text := ExpandFileName(FileBox2.Directory);
+
+  // appearance
+  defaultLeftFont := FileBox1.Font.Name;
+  defaultLeftFontSize := FileBox1.Font.Size;
+  defaultLeftForeground := FileBox1.Font.Color;
+  defaultRightFont := FileBox2.Font.Name;
+  defaultRightfontSize := FileBox2.Font.Size;
+  defaultRightForeground := FileBox2.Font.Color;
+  defaultCommandFont := commandMemo.Font.Name;
+  defaultCommandFontSize := commandMemo.Font.Size;
+  defaultCommandForeground := commandMemo.Font.Color;
+  defaultCommandBackground := commandMemo.Color;
+  setAppearance;
 
   // files
   cabinetDirectory := homeDir + directorySeparator + '.cabinet';
@@ -274,6 +328,50 @@ begin
 
 end;
 
+procedure TForm1.SetAppearance;
+begin
+  // appearance
+  FileBox1.Font.Color := defaultLeftForeground;
+  FileBox1.Font.Name := defaultLeftFont;
+  FileBox1.Font.Size := defaultLeftFontSize;
+  FileBox2.Font.Color := defaultRightForeground;
+  FileBox2.Font.Name := defaultRightFont;
+  FileBox2.Font.Size := defaultRightFontSize;
+  commandMemo.Font.Name := defaultCommandFont;
+  commandMemo.Font.Size := defaultCommandFontSize;
+  commandMemo.Color := defaultCommandBackground;
+  commandMemo.Font.Color := defaultCommandForeground;
+
+  // tag dialog appearance
+  tagCacheFont := defaultLeftFont;
+  tagCacheFontSize := defaultLeftFontSize;
+  tagCacheForegroundColor := defaultLeftForeground;
+  tagSearchTagListFont := defaultLeftFont;
+  tagSearchTagListFontSize := defaultLeftFontSize;
+  tagSearchTagListForegroundColor := defaultLeftForeground;
+  tagSearchResultFont := defaultLeftFont;
+  tagSearchResultFontSize := defaultLeftFontSize;
+  tagSearchResultForegroundColor := defaultLeftForeground;
+  tagContentFont := defaultLeftFont;
+  tagContentFontSize := defaultLeftFontSize;
+  tagContentBackgroundColor := defaultCommandBackground;
+  tagContentForegroundColor := defaultCommandForeground;
+
+  // find dialog appearance
+  findForeground := defaultLeftForeground;
+  findFont := defaultLeftFont;
+  findFontSize := defaultLeftFontSize;
+
+  // recipes dialog appearance
+  recipesListFont := defaultLeftFont;
+  recipesListFontSize := defaultLeftFontSize;
+  recipesListForeground := defaultLeftForeground;
+  recipesTextFont := defaultLeftFont;
+  recipesTextFontSize := defaultLeftFontSize;
+  recipesTextForeground := defaultLeftForeground;
+  recipesTextBackground := defaultCommandBackground;
+end;
+
 procedure TForm1.ReadConfig;
 var
   filep: textFile;
@@ -283,6 +381,7 @@ var
 begin
   if FileExists(configFile) Then
   begin
+    setAppearance;
     patterns.Clear;
     assignFile(filep, configFile);
     reset(filep);
@@ -290,7 +389,7 @@ begin
     while not eof(filep) do
     begin
       readln(filep, s);
-      regex.Expression := '^file-command.*';
+      regex.Expression := '^file-command ::::';
       if regex.exec(s) Then
       begin
         res := SplitString(s, ' :::: ');
@@ -301,7 +400,7 @@ begin
         end;
       end;
 
-      regex.Expression := '^default-editor.*';
+      regex.Expression := '^default-editor ::::';
       if regex.exec(s) Then
       begin
         res := SplitString(s, ' :::: ');
@@ -312,7 +411,7 @@ begin
         end;
       end;
 
-      regex.Expression := '^terminal-emulator.*';
+      regex.Expression := '^terminal-emulator ::::';
       if regex.exec(s) Then
       begin
         res := SplitString(s, ' :::: ');
@@ -323,7 +422,246 @@ begin
         end;
       end;
 
-      regex.Expression := '^pattern.*';
+      regex.Expression := '^left-foreground ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          FileBox1.Font.Color := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^right-foreground ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          FileBox2.Font.Color := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+ 
+      regex.Expression := '^left-font ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          FileBox1.Font.Name := res[1];
+          FileBox1.Font.Size := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^right-font ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          FileBox2.Font.Name := res[1];
+          FileBox2.Font.Size := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^command-background ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          CommandMemo.Color := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^command-foreground ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          CommandMemo.Font.Color := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^command-font ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          CommandMemo.Font.Name := res[1];
+          CommandMemo.Font.Size := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^find-foreground ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          findForeground := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^find-font ::::';
+      if regex.exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          findFont := res[1];
+          findFontSize := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-cache-foreground :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagCacheForeGroundColor := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-cache-font :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagCacheFont := res[1];
+          tagCacheFontSize := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-search-foreground :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagSearchResultForegroundColor := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-search-font :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagSearchResultFont := res[1];
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-content-foreground :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagContentForegroundColor := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-content-background :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagContentBackgroundColor := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^tag-content-font :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          tagContentFont := res[1];
+          tagContentFontSize := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^recipes-list-foreground :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          recipesListForeground := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^recipes-list-font :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          recipesListFont := res[1];
+          recipesListFontSize := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^recipes-text-foreground :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          recipesTextForeground := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^recipes-text-background :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          recipesTextBackground := StrToInt(res[1]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^recipes-text-font :::: .*';
+      if regex.Exec(s) Then
+      begin
+        res := SplitString(s, ' :::: ');
+        if res[1] <> '' Then
+        begin
+          recipesTextFont := res[1];
+          recipesTextFontSize := StrToInt(res[2]);
+          continue;
+        end;
+      end;
+
+      regex.Expression := '^pattern ::::';
       if regex.exec(s) Then
         patterns.Append(s);
     end;
@@ -403,6 +741,16 @@ begin
   Form4.SetFileBox2(FileBox2);
   Form4.SetLeftPathEdit(LeftPathEdit);
   Form4.SetRightPathEdit(RightPathEdit);
+  Form4.SetCacheListFont(tagCacheFont);
+  Form4.SetCacheListFontSize(tagCacheFontSize);
+  Form4.SetCacheListForeground(tagCacheForegroundColor);
+  Form4.SetSearchResultFont(tagSearchResultfont);
+  Form4.SetSearchResultFontSize(tagSearchResultFontSize);
+  Form4.SetSearchResultForeground(tagSearchResultForegroundColor);
+  Form4.SetContentFont(tagContentFont);
+  Form4.SetContentFontSize(tagContentFontSize);
+  Form4.SetContentForeground(tagContentForegroundColor);
+  Form4.SetContentBackground(tagContentBackgroundColor);
   Form4.Show;
 end;
 
@@ -459,13 +807,19 @@ begin
     begin
       directoryName := getDirectoryName(box);
       if DirectoryExists(directoryName) Then
-        DeleteDirectory(directoryName, False);
+      begin
+        if not DeleteDirectory(directoryName, False) Then
+          ShowMessage('Cannot delete directory: ' + directoryName);
+      end;
     end
     else
     begin
       fileName := boxDir + DirectorySeparator + s;
       if FileExists(fileName) Then
-        DeleteFile(fileName);
+      begin
+        if not DeleteFile(fileName) Then
+          ShowMessage('Cannot delete file: ' + fileName);
+      end;
     end;
   end;
 
@@ -527,7 +881,10 @@ begin
         if what = 'rename' Then
         begin
           if DirectoryExists(directoryPath) Then
-            RenameFile(directoryPath, directoryNewPath);
+          begin
+            if not RenameFile(directoryPath, directoryNewPath) Then
+              ShowMessage('Cannot rename file: ' + directoryPath);
+          end;
         end;
 
         if what = 'copy' Then
@@ -535,7 +892,8 @@ begin
           CreateDir(newName);
           if DirectoryExists(newName) Then
           begin
-            CopyDirTree(directoryPath, newName);
+            if not CopyDirTree(directoryPath, newName) Then
+              ShowMessage('Errors while copying' + directoryPath);
           end
           else
             ShowMessage('failed to create directory: ' + newName);
@@ -558,12 +916,16 @@ begin
         if what = 'rename' Then
         begin
           if FileExists(fileName) Then
-            RenameFile(fileName, fileNewName);
+          begin
+            if not RenameFile(fileName, fileNewName) Then
+              ShowMessage('Cannot rename file: ' + fileName);
+          end;
         end;
 
         if what = 'copy' Then
         begin
-          CopyFile(fileName, newName);
+          if not CopyFile(fileName, newName) Then
+            ShowMessage('Cannot copy file: ' + fileName);
         end;
 
         if what = 'link' Then
@@ -691,6 +1053,9 @@ begin
   Form5.SetFileCommand(fileCommand);
   Form5.SetPatterns(patterns);
   Form5.SetProcessList(processList);
+  Form5.SetForeground(findForeground);
+  Form5.SetFont(findFont);
+  Form5.SetFontSize(findFontSize);
   Form5.Show;
 end;
 
@@ -746,12 +1111,18 @@ begin
 
       if what = 'move' Then
       begin
-        CreateDir(destDir + directorySeparator + directoryName);
-        CopyDirTree(directoryPath, destDir + directorySeparator + directoryName);
-        DeleteDirectory(directoryPath, False);
-        FileBox1.UpdateFileList;
-        FileBox2.UpdateFileList;
-        continue;
+        if not CreateDir(destDir + directorySeparator + directoryName) Then
+        begin
+          ShowMessage('Cannot create directory: ' + destDir + directorySeparator + directoryName);
+        end
+        else
+        begin
+          CopyDirTree(directoryPath, destDir + directorySeparator + directoryName);
+          DeleteDirectory(directoryPath, False);
+          FileBox1.UpdateFileList;
+          FileBox2.UpdateFileList;
+          continue;
+        end;
       end;
     end
     else
@@ -759,17 +1130,28 @@ begin
       fileName := sourceDir + directorySeparator + s;
       if what = 'copy' Then
       begin
-        copyFile(fileName, destDir + directorySeparator + s);
-        fbox.UpdateFileList;
+        if not copyFile(fileName, destDir + directorySeparator + s) Then
+        begin
+          ShowMessage('Cannot copy file: ' + fileName);
+        end
+        else
+          fbox.UpdateFileList;
+
         continue;
       end;
 
       if what = 'move' Then
       begin
-        copyFile(fileName, destDir + directorySeparator + s);
-        DeleteFile(fileName);
-        FileBox1.UpdateFileList;
-        FileBox2.UpdateFileList;
+        if not copyFile(fileName, destDir + directorySeparator + s) Then
+        begin
+          ShowMessage('Cannot move file: ' + fileName);
+        end
+        else
+        begin
+          DeleteFile(fileName);
+          FileBox1.UpdateFileList;
+          FileBox2.UpdateFileList;
+        end;
       end;
     end;
   end;
@@ -822,8 +1204,12 @@ begin
   begin
     if InputQuery('New Directory', 'Type the new directory name', False, newDirName) Then
     begin
-      CreateDir(boxDir + directorySeparator + newDirName);
-      fbox.UpdateFileList;
+      if not CreateDir(boxDir + directorySeparator + newDirName) Then
+      begin
+        ShowMessage('Cannot create directory: ' + boxDir + directorySeparator + newDirName);
+      end
+      else
+        fbox.UpdateFileList;
     end;
   end;
 end;
@@ -833,6 +1219,7 @@ var
   boxDir: ansistring;
   fbox: TFileListBox;
   newFile: ansistring;
+  newFileFullPath: ansistring;
 begin
   if box = 1 Then
   begin
@@ -848,8 +1235,14 @@ begin
   begin
     if InputQuery('New File', 'Type the new file name', False, newFile) Then
     begin
-      FileCreate(boxDir + directorySeparator + newFile);
-      fbox.UpdateFileList;
+      newFileFullPath := boxDir + directorySeparator + newFile;
+      FileCreate(newFileFullPath);
+      if not FileExists(newFileFullPath) Then
+      begin
+        ShowMessage('Cannot Crete file: ' + newFileFullPath);
+      end
+      else
+        fbox.UpdateFileList;
     end;
   end;
 end;
@@ -947,6 +1340,13 @@ begin
   Form3 := TForm3.Create(nil);
   Form3.SetCommandMemo(CommandMemo);
   Form3.SetConfigDir(cabinetDirectory);
+  Form3.SetListFont(recipesListFont);
+  Form3.SetListFontSize(recipesListFontSize);
+  Form3.SetListForeground(recipesListForeground);
+  Form3.SetTextFont(recipesTextFont);
+  Form3.SetTextFontSize(recipesTextFontSize);
+  Form3.SetTextForeground(recipesTextForeground);
+  Form3.SetTextBackground(recipesTextBackground);
   Form3.Show;
 end;
 

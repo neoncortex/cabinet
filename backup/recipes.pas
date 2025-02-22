@@ -109,7 +109,9 @@ begin
   begin
     RecipesMemo.Lines.SaveToFile(fileName);
     RecipesFileBox.UpdateFileList;
-  end;
+  end
+  else
+    ShowMessage('File not found: ' + fileName);
 end;
 
 procedure TForm3.NewRecipeButtonClick(Sender: TObject);

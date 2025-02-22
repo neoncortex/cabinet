@@ -51,6 +51,10 @@ type
     procedure SetPatterns(list: TStringList);
     procedure SetFileCommand(command: ansistring);
     procedure SetProcessList(list: TList);
+    procedure SetForeground(colorName: TColor);
+    procedure SetFont(fontName: ansistring);
+    procedure SetFontSize(fontSize: integer);
+
   private
 
   public
@@ -112,6 +116,22 @@ end;
 procedure TForm5.SetProcessList(list: TList);
 begin
   processList := list;
+end;
+
+// appearance
+procedure TForm5.SetForeground(colorName: TColor);
+begin
+  resultList.Font.Color := colorName;
+end;
+
+procedure TForm5.SetFont(fontName: ansistring);
+begin
+  resultList.Font.Name := fontName;
+end;
+
+procedure TForm5.SetFontSize(fontSize: integer);
+begin
+  resultList.Font.Size := fontSize;
 end;
 
 function TForm5.contentMatch(fileName: ansistring): TStringList;
