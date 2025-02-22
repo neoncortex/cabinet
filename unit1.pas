@@ -1340,6 +1340,7 @@ begin
   Form3 := TForm3.Create(nil);
   Form3.SetCommandMemo(CommandMemo);
   Form3.SetConfigDir(cabinetDirectory);
+  Form3.SetProcessList(processList);
   Form3.SetListFont(recipesListFont);
   Form3.SetListFontSize(recipesListFontSize);
   Form3.SetListForeground(recipesListForeground);

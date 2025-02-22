@@ -1341,7 +1341,7 @@ begin
   Form3.SetCommandMemo(CommandMemo);
   Form3.SetConfigDir(cabinetDirectory);
   Form3.SetListFont(recipesListFont);
-  Form3.SetListFontSize(recipesFontSize);
+  Form3.SetListFontSize(recipesListFontSize);
   Form3.SetListForeground(recipesListForeground);
   Form3.SetTextFont(recipesTextFont);
   Form3.SetTextFontSize(recipesTextFontSize);

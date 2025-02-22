@@ -6,14 +6,13 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, FileCtrl, ExtCtrls,
-  StdCtrls, AsyncProcess;
+  StdCtrls, processManager;
 
 type
 
   { TForm3 }
 
   TForm3 = class(TForm)
-    AsyncProcess1: TAsyncProcess;
     RecipesFilterButton: TButton;
     ContentBox: TGroupBox;
     RecipesFilterEntry: TEdit;
@@ -36,6 +35,7 @@ type
     procedure UseRecipeButtonClick(Sender: TObject);
     procedure SetCommandMemo(commandMemoName: TMemo);
     procedure SetConfigDir(dirName: ansistring);
+    procedure SetProcessList(list: TList);
     procedure SetListFont(fontName: ansistring);
     procedure SetListFontSize(fontSize: integer);
     procedure SetListForeground(colorData: TColor);
@@ -54,6 +54,7 @@ var
   CommandMemo: TMemo;
   configDir: ansistring;
   recipesDir: ansistring;
+  processList: TList;
   Form3: TForm3;
 
 implementation
@@ -65,6 +66,11 @@ implementation
 procedure TForm3.SetCommandMemo(commandMemoName: TMemo);
 begin
   CommandMemo := commandMemoName;
+end;
+
+procedure TForm3.SetProcessList(list: TList);
+begin
+  processList := list;
 end;
 
 procedure TForm3.SetConfigDir(dirName: ansistring);
@@ -188,13 +194,14 @@ end;
 
 procedure TForm3.EditRecipeButtonClick(Sender: TObject);
 var
+  commandLine: ansistring;
   fileName: ansistring;
 begin
   fileName := recipesDir + directorySeparator + recipesFileBox.GetSelectedText;
   if FileExists(fileName) Then
   begin
-    ASyncProcess1.CommandLine := 'xdg-open "' + fileName + '"';
-    ASyncProcess1.Execute;
+    commandLine := 'xdg-open "' + fileName + '"';
+    processExecute(commandLine, processList);
   end;
 end;
 
